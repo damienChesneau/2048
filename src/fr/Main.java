@@ -1,6 +1,7 @@
 package fr;
 
-import fr.damienchesneau.ugame.Plateau;
+import fr.damienchesneau.ugame.client.Plateau;
+import fr.damienchesneau.ugame.client.UserPreference;
 
 /**
  *
@@ -14,6 +15,10 @@ public class Main {
     public static void main(String[] args) {
         Plateau plateau = new Plateau();
         plateau.startGame();
+        if (args.length==2 && args[0].equals("-s") ) {
+            UserPreference.setsSaveFile(args[1]);
+        }
+        System.out.println(UserPreference.getsSaveFile());
     }
-    
+
 }

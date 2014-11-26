@@ -1,4 +1,4 @@
-package fr.damienchesneau.ugame;
+package fr.damienchesneau.ugame.client;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -7,7 +7,7 @@ import java.awt.event.KeyListener;
  *
  * @author Damien Chesneau <contact@damienchesneau.fr>
  */
-public class Commands implements KeyListener {
+class Commands implements KeyListener {
     
     private final Plateau plateau;
     
@@ -45,5 +45,8 @@ public class Commands implements KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
+    }
+    public Plateau getPlateau(){
+        return this.plateau;
     }
 }

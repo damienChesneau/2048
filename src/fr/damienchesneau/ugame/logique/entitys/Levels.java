@@ -1,11 +1,11 @@
 
-package fr.damienchesneau.ugame;
+package fr.damienchesneau.ugame.logique.entitys;
 
 /**
  *
  * @author Damien Chesneau <contact@damienchesneau.fr>
  */
- enum Levels {
+ public enum Levels {
     NONE,
     LEVEL1, /* 2 */
     LEVEL2, /* 4 */

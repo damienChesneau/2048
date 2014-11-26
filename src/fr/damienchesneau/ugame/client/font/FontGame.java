@@ -1,4 +1,4 @@
-package fr.damienchesneau.ugame.font;
+package fr.damienchesneau.ugame.client.font;
 
 import java.awt.Font;
 import java.awt.FontFormatException;

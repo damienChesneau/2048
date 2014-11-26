@@ -1,54 +1,32 @@
-package fr.damienchesneau.ugame;
+package fr.damienchesneau.ugame.client;
 
-import fr.damienchesneau.ugame.font.FontGame;
+import fr.damienchesneau.ugame.logique.entitys.Levels;
+import fr.damienchesneau.ugame.client.font.FontGame;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.event.KeyListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import sun.java2d.pipe.BufferedOpCodes;
 
 /**
  *
  * @author Damien Chesneau <contact@damienchesneau.fr>
  */
-public class Window extends javax.swing.JFrame {
+class WindowOLD extends javax.swing.JFrame {
 
-    public Window(KeyListener keyl) {
+    WindowOLD(Commands keyl) {
         initComponents();
         this.getContentPane().setBackground(Color.WHITE);
         this.jPanelCommands.setBackground(Color.WHITE);
-        this.jPanelColumn1Cell1.setBackground(standard.getBackgroundColor());
-        this.jPanelColumn1Cell2.setBackground(standard.getBackgroundColor());
-        this.jPanelColumn1Cell3.setBackground(standard.getBackgroundColor());
-        this.jPanelColumn1Cell4.setBackground(standard.getBackgroundColor());
-        this.jPanelColumn2Cell1.setBackground(standard.getBackgroundColor());
-        this.jPanelColumn2Cell2.setBackground(standard.getBackgroundColor());
-        this.jPanelColumn2Cell3.setBackground(standard.getBackgroundColor());
-        this.jPanelColumn2Cell4.setBackground(standard.getBackgroundColor());
-        this.jPanelColumn3Cell1.setBackground(standard.getBackgroundColor());
-        this.jPanelColumn3Cell2.setBackground(standard.getBackgroundColor());
-        this.jPanelColumn3Cell3.setBackground(standard.getBackgroundColor());
-        this.jPanelColumn3Cell4.setBackground(standard.getBackgroundColor());
-        this.jPanelColumn4Cell1.setBackground(standard.getBackgroundColor());
-        this.jPanelColumn4Cell2.setBackground(standard.getBackgroundColor());
-        this.jPanelColumn4Cell3.setBackground(standard.getBackgroundColor());
-        this.jPanelColumn4Cell4.setBackground(standard.getBackgroundColor());
         addKeyListener(keyl);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        addWindowListener(new WindowAdapter() {
-            public void windowOpened(WindowEvent e) {
-                requestFocus();
-            }
-        });
+        addWindowListener(new GameWindowListener(this, keyl.getPlateau()));
         pack();
+        setTitle("2048");
         setVisible(true);
     }
 
@@ -154,7 +132,7 @@ public class Window extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanelCommandsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 54, Short.MAX_VALUE))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -645,30 +623,6 @@ public class Window extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
-/*
-    public static void main(String args[]) {
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Window.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Window.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Window.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Window.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Window().setVisible(true);
-            }
-        });
-    }*/
 
     public void printPlateau(Levels[][] tab) {
         initPlat();
@@ -689,6 +643,7 @@ public class Window extends javax.swing.JFrame {
         setColumn4Cell3Value(tab[3][2]);
         setColumn4Cell4Value(tab[3][3]);
     }
+
     private void initPlat() {
         setColumn1Cell1Value(Levels.NONE);
         setColumn1Cell2Value(Levels.NONE);
@@ -861,7 +816,6 @@ public class Window extends javax.swing.JFrame {
                 jlabel.setForeground(level11Color.getFontColor());
                 jlabel.setFont(level11Color.getFont());
                 jlabel.setText("2048");
-
                 jpanel.setBackground(level11Color.getBackgroundColor());
                 break;
         }
@@ -899,12 +853,12 @@ public class Window extends javax.swing.JFrame {
     }
     private final PanelConfig standard = new PanelConfig(null, new Color(238, 228, 218, 35), new Color(238, 228, 218, 35));
     private final PanelConfig level1Color = new PanelConfig(new Font(fontGameName, 107, 55), new Color(238, 228, 218, 255), new Color(119, 110, 101, 255));
-    private final PanelConfig level2Color = new PanelConfig(new Font(fontGameName, 107, 55), new Color(238, 224, 200, 128), new Color(119, 110, 101, 255));
-    private final PanelConfig level3Color = new PanelConfig(new Font(fontGameName, 107, 55), new Color(238, 224, 200, 255), new Color(249, 246, 242, 255));
+    private final PanelConfig level2Color = new PanelConfig(new Font(fontGameName, 107, 55), new Color(237, 224, 200, 255), new Color(119, 110, 101, 255));
+    private final PanelConfig level3Color = new PanelConfig(new Font(fontGameName, 107, 55), new Color(242, 177, 121, 255), new Color(249, 246, 242, 255));
     private final PanelConfig level4Color = new PanelConfig(new Font(fontGameName, 107, 55), new Color(245, 149, 99, 255), new Color(249, 246, 242, 255));
     private final PanelConfig level5Color = new PanelConfig(new Font(fontGameName, 107, 55), new Color(246, 124, 95, 255), new Color(249, 246, 242, 255));
     private final PanelConfig level6Color = new PanelConfig(new Font(fontGameName, 107, 55), new Color(246, 94, 59, 255), new Color(249, 246, 242, 255));
-    private final PanelConfig level7Color = new PanelConfig(new Font(fontGameName, 107, 45), new Color(246, 94, 59, 255), new Color(249, 246, 242, 255));
+    private final PanelConfig level7Color = new PanelConfig(new Font(fontGameName, 107, 45), new Color(237, 207, 114, 255), new Color(249, 246, 242, 255));
     private final PanelConfig level8Color = new PanelConfig(new Font(fontGameName, 107, 45), new Color(237, 204, 97, 255), new Color(249, 246, 242, 255));
     private final PanelConfig level9Color = new PanelConfig(new Font(fontGameName, 107, 45), new Color(237, 200, 80, 255), new Color(249, 246, 242, 255));
     private final PanelConfig level10Color = new PanelConfig(new Font(fontGameName, 107, 35), new Color(237, 197, 63, 255), new Color(249, 246, 242, 255));
