@@ -18,18 +18,19 @@ public class Plateau implements Cloneable {
     private boolean gameOver = false;
     private int score = 0;
     private boolean ingame = false;
+
     public Plateau() {
         initaliseJFrameWindow();
         ihm = new Window(new Commands(this));
     }
 
     public void startGame() {
-        
+
         initializePlateau();
     }
 
     public int goLeft() {
-        if(isGameOver()){
+        if (isGameOver()) {
             return score;
         }
         for (int i = 0; i < PLATEAU_HEIGHT; i++) {
@@ -67,7 +68,7 @@ public class Plateau implements Cloneable {
     }
 
     public void leftGravity() {
-        if(isGameOver()){
+        if (isGameOver()) {
             return;
         }
         for (int i = 0; i < PLATEAU_HEIGHT; i++) {
@@ -87,7 +88,7 @@ public class Plateau implements Cloneable {
     }
 
     public int goRight() {
-        if(isGameOver()){
+        if (isGameOver()) {
             return score;
         }
         for (int i = 0; i < PLATEAU_HEIGHT; i++) {
@@ -137,7 +138,7 @@ public class Plateau implements Cloneable {
     }
 
     public int goDown() {
-        if(isGameOver()){
+        if (isGameOver()) {
             return score;
         }
         for (int i = 0; i < PLATEAU_HEIGHT; i++) {
@@ -187,7 +188,7 @@ public class Plateau implements Cloneable {
     }
 
     public int goUp() {
-        if(isGameOver()){
+        if (isGameOver()) {
             return score;
         }
         for (int i = PLATEAU_HEIGHT - 1; i > 0; i--) {
@@ -262,19 +263,23 @@ public class Plateau implements Cloneable {
         gameOver = true;
         ingame = false;
     }
-    public boolean isInGame(){
+
+    public boolean isInGame() {
         return ingame;
     }
-    public int getIById(int id){
+
+    public int getIById(int id) {
         return Integer.parseInt(new Integer(id).toString().substring(0, 1));
     }
-    public int getJById(int id){
+
+    public int getJById(int id) {
         int jValue = 0;
         if (new Integer(id).toString().length() != 1) {
             jValue = Integer.parseInt(new Integer(id).toString().toString().substring(1, 2));
         }
         return jValue;
     }
+
     public List<Integer> getEmptyCellIds() {
         List<Integer> idDispo = new ArrayList<Integer>();
         for (int i = 0; i < PLATEAU_HEIGHT; i++) {
@@ -289,7 +294,7 @@ public class Plateau implements Cloneable {
 
     private void placeNewValue() {
         PosAt firstElement = newValue();
-        if ( firstElement != null && plateau[firstElement.getX()][firstElement.getY()] == 0) {
+        if (firstElement != null && plateau[firstElement.getX()][firstElement.getY()] == 0) {
             if (numberOfEmptyCell() == 0) {
                 gameOver();
             } else {
@@ -400,8 +405,16 @@ public class Plateau implements Cloneable {
     @Override
     public Object clone() throws CloneNotSupportedException {
         Plateau copy = (Plateau) super.clone();
-        copy.plateau = (plateau.clone());
+        copy.plateau = (cloneAMartice(this.plateau));
         return copy;
+    }
+
+    private int[][] cloneAMartice(int[][] toclone) {
+        int[][] cloned = new int[PLATEAU_HEIGHT][PLATEAU_WIDTH];
+        for (int i = 0; i < PLATEAU_HEIGHT; i++) {
+                plateau[i]= toclone[i].clone();
+        }
+        return cloned;
     }
 
     @Override

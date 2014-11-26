@@ -251,7 +251,7 @@ public class AIsolver {
                 score = p.goLeft();
                 break;
         }
-        return score;
+        return 84;
     }
 
     /**
