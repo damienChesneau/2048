@@ -1,6 +1,5 @@
 package fr.damienchesneau.ugame.client;
 
-import fr.damienchesneau.ugame.logique.entitys.Levels;
 import fr.damienchesneau.ugame.client.font.FontGame;
 import java.awt.Color;
 import java.awt.Font;
@@ -25,6 +24,9 @@ class Window extends javax.swing.JFrame {
         addKeyListener(keyl);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         addWindowListener(new GameWindowListener(this, keyl.getPlateau()));
+        this.jButton1.setFont(new Font(fontGameName, 50, 20));
+        this.jLabel1.setFont(new Font(fontGameName, 50, 20));
+        this.jLabel2.setFont(new Font(fontGameName, 50, 15));
         pack();
         setTitle("2048");
         setVisible(true);

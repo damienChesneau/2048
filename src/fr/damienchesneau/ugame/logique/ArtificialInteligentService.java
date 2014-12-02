@@ -9,6 +9,6 @@ import java.util.Map;
  */
 public interface ArtificialInteligentService {
 
-    public Map<String, Object> solveGame(Plateau plateau);
-    
+    public Map<String, Object> solveGame(GameService game) throws CloneNotSupportedException;
+
 }

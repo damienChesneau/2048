@@ -1,7 +1,11 @@
 package fr.damienchesneau.ugame.client;
 
+import fr.damienchesneau.ugame.logique.ArtificialInteligentService;
+import fr.damienchesneau.ugame.logique.LogiqueFactory;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -41,6 +45,12 @@ class Commands implements KeyListener {
             default:
                 System.out.println("Not Supported key");
         }
+//        ArtificialInteligentService df = LogiqueFactory.getArtificialInteligentService();
+//        try {
+//            df.solveGame((Plateau) plateau.clone());
+//        } catch (CloneNotSupportedException ex) {
+//            Logger.getLogger(Plateau.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }
 
     @Override

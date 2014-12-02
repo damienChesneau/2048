@@ -16,13 +16,8 @@
  */
 package fr.damienchesneau.ugame;
 
-import fr.damienchesneau.ugame.client.ai.AIsolver;
 import fr.damienchesneau.ugame.client.ai.dataobjects.ActionStatus;
-import com.datumbox.opensource.dataobjects.Direction;
 import fr.damienchesneau.ugame.client.Plateau;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Scanner;
 
 /**
  * The main class of the Game.
@@ -37,7 +32,7 @@ public class ConsoleGame {
      * @param args
      * @throws CloneNotSupportedException
      */
-    public static void main(String[] args) throws CloneNotSupportedException {
+    public  void main(String[] args) throws CloneNotSupportedException {
         calculateAccuracy();
     }
 
@@ -55,16 +50,16 @@ public class ConsoleGame {
             int hintDepth = 7;
             Plateau plateau = new Plateau();
             plateau.startGame();
-            Direction newDir = AIsolver.findBestMove(plateau, hintDepth);
+//            Direction newDir = AIsolver.findBestMove(plateau, hintDepth);
             ActionStatus result = ActionStatus.CONTINUE;
             while (result == ActionStatus.CONTINUE || result == ActionStatus.INVALID_MOVE) {
-                if (plateau.isGameOver()) {
+//                if (plateau.isGameOver()) {
                     plateau = new Plateau();
                     plateau.startGame();
-                }
-                int ezc = AIsolver.direction(newDir, plateau);
+//                }
+//                int ezc = AIsolver.direction(newDir, plateau);
                 if (result == ActionStatus.CONTINUE || result == ActionStatus.INVALID_MOVE) {
-                    newDir = AIsolver.findBestMove(plateau, hintDepth);
+//                    newDir = AIsolver.findBestMove(plateau, hintDepth);
                 }
             }
 
