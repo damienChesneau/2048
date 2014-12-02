@@ -1,6 +1,8 @@
 
 package fr.damienchesneau.ugame.logique.entitys;
 
+import fr.damienchesneau.ugame.logique.GameService;
+
 /**
  *
  * @author Damien Chesneau <contact@damienchesneau.fr>
@@ -11,11 +13,12 @@ public class DirectionChoose {
      */
     private final int score;
     private final Direction direction;
-    private final int[][] plateau;
-    public DirectionChoose(int score, Direction dir,int[][] plateau){
+    private final GameService game;
+    
+    public DirectionChoose(int score, Direction dir,GameService game){
         this.score = score;
         this.direction = dir;
-        this.plateau = plateau;
+        this.game = game;
     }
 
     public int getScore() {
@@ -25,8 +28,9 @@ public class DirectionChoose {
     public Direction getDirection() {
         return direction;
     }
-    public int[][] getPlateau(){
-        return plateau;
+
+    public GameService getGame() {
+        return game;
     }
     
 }

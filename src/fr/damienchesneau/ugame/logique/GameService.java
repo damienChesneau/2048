@@ -89,4 +89,6 @@ public interface GameService extends Cloneable {
     public int getNumberOfEmptyCells();
     
     public boolean equals(Object obj);
+    
+    public boolean isWin();
 }

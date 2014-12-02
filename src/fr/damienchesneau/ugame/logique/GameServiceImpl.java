@@ -20,6 +20,7 @@ class GameServiceImpl implements GameService {
     private boolean gameOver = false;
     private int score = 0;
     private boolean ingame = false;
+    private boolean win = false;
 
     public GameServiceImpl() {
         ingame = true;
@@ -45,9 +46,9 @@ class GameServiceImpl implements GameService {
     }
 
     public Map<String, Object> goLeft() {
-//        if (isGameOver()) {
-//            return formatTheRet();
-//        }
+        if (isGameOver()) {
+            return formatTheRet();
+        }
         leftGravity();
         for (int i = 0; i < PLATEAU_HEIGHT; i++) {
             boolean justOneMariedByLine = true;
@@ -88,9 +89,9 @@ class GameServiceImpl implements GameService {
     }
 
     private void leftGravity() {
-//        if (isGameOver()) {
-//            return;
-//        }
+        if (isGameOver()) {
+            return;
+        }
         for (int i = 0; i < PLATEAU_HEIGHT; i++) {
             boolean justOneMariedByLine = true;
             for (int j = PLATEAU_WIDTH - 1; j > 0; j--) {
@@ -108,9 +109,9 @@ class GameServiceImpl implements GameService {
     }
 
     public Map<String, Object> goRight() {
-//        if (isGameOver()) {
-//            return formatTheRet();
-//        }
+        if (isGameOver()) {
+            return formatTheRet();
+        }
         rightGravity();
         for (int i = 0; i < PLATEAU_HEIGHT; i++) {
             boolean justOneMariedByLine = true;
@@ -155,9 +156,9 @@ class GameServiceImpl implements GameService {
     }
 
     public Map<String, Object> goDown() {
-//        if (isGameOver()) {
-//            return formatTheRet();
-//        }
+        if (gameOver) {
+            return formatTheRet();
+        }
         downGravity();
         for (int j = 0; j < PLATEAU_WIDTH; j++) {//LIGNES
             boolean justOneMariedByLine = true;
@@ -203,12 +204,13 @@ class GameServiceImpl implements GameService {
 
     @Override
     public Map<String, Object> goUp() {
+        if (gameOver) {
+            return formatTheRet();
+        }
         upGravity();
-
         for (int j = 0; j < PLATEAU_WIDTH; j++) {
             boolean justOneMariedByLine = true;
             for (int i = 1; i < PLATEAU_HEIGHT; i++) {
-
                 if (plateau[j][i] != 0) {
                     int upLevel = 0;
                     if (i - 1 != -1 && (upLevel = addLevel(plateau[j][i - 1], plateau[j][i])) == 0) {
@@ -259,6 +261,7 @@ class GameServiceImpl implements GameService {
         List<Integer> ids = getEmptyCellIds();
         if (ids.size() == 0) {
 //            C = true;
+            gameOver();
             return null;
         }
         Random r2 = new Random(time);
@@ -269,13 +272,14 @@ class GameServiceImpl implements GameService {
     }
 
     private void gameOver() {
-//        System.err.println("Game over");
+        System.err.println("Game over");
         gameOver = true;
         ingame = false;
     }
 
+    @Override
     public boolean isInGame() {
-        return isIngame();
+        return ingame;
     }
 
     private int getIById(int id) {
@@ -345,11 +349,20 @@ class GameServiceImpl implements GameService {
             level = levelOne * 2;
             setScore(getScore() + level);
             if (level == 2048) {
-//                ingame = false;
+                ingame = false;
+                win = true;
                 System.out.println("--------------------------- 2048 ------------------------------------");
+            }
+            if (level == 1024) {
+                win = true;
+                System.out.println("--------------------------- 1024 ------------------------------------");
             }
         }
         return level;
+    }
+
+    public boolean isWin() {
+        return win;
     }
 
     @Override
@@ -358,6 +371,26 @@ class GameServiceImpl implements GameService {
     }
 
     public boolean isGameOver() {
+//        boolean gameOver = false;
+//
+//        if (isWin()) {
+//            gameOver = true;
+//        } else {
+//            if (getNumberOfEmptyCells() == 0) { //if no more available cells
+//                GameService copyBoard = (GameService) this.clone();
+
+//                if (copyBoard.goUp()== 0
+//                        && copyBoard.move(Direction.RIGHT) == 0
+//                        && copyBoard.move(Direction.DOWN) == 0
+//                        && copyBoard.move(Direction.LEFT) == 0) {
+//                    gameOver = true;
+//                }
+
+                //copyBoard=null;
+//            }
+//        }
+
+//        return gameOver;
         return gameOver;
     }
 
@@ -368,36 +401,6 @@ class GameServiceImpl implements GameService {
 
     public boolean isIngame() {
         return ingame;
-    }
-
-    private final class PosAt {
-
-        private final int x;
-        private final int y;
-        private final int value;
-
-        public PosAt(int x, int y, int value) {
-            this.x = x;
-            this.y = y;
-            this.value = value;
-        }
-
-        public int getX() {
-            return x;
-        }
-
-        public int getY() {
-            return y;
-        }
-
-        @Override
-        public String toString() {
-            return "x=" + x + " y=" + y + "value=" + value;
-        }
-
-        public int getValue() {
-            return value;
-        }
     }
 
     public int getScore() {
@@ -434,4 +437,33 @@ class GameServiceImpl implements GameService {
         return ret;
     }
 
+    private final class PosAt {
+
+        private final int x;
+        private final int y;
+        private final int value;
+
+        public PosAt(int x, int y, int value) {
+            this.x = x;
+            this.y = y;
+            this.value = value;
+        }
+
+        public int getX() {
+            return x;
+        }
+
+        public int getY() {
+            return y;
+        }
+
+        @Override
+        public String toString() {
+            return "x=" + x + " y=" + y + "value=" + value;
+        }
+
+        public int getValue() {
+            return value;
+        }
+    }
 }

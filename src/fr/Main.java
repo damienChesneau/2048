@@ -21,7 +21,7 @@ public class Main {
         plateau.startGame();
         ArtificialInteligentService df = LogiqueFactory.getArtificialInteligentService();
         try {
-            df.solveGame(plateau.getGame());
+            df.solveGame(plateau.getGame().clone());
         } catch (CloneNotSupportedException ex) {
             Logger.getLogger(Plateau.class.getName()).log(Level.SEVERE, null, ex);
         }
