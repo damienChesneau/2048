@@ -17,35 +17,41 @@ public class Plateau implements Cloneable {
         gameSrv = LogiqueFactory.getGameService();
         ihm = new Window(new Commands(this));
         initaliseJFrameWindow();
-        ihm.printPlateau(gameSrv.startGame());
+        updateWindow(gameSrv.startGame(), 0);
     }
 
     public void startGame() {
         int[][] startGame = gameSrv.startGame();
     }
 
-    public void goLeft() {
-        Map<String, Object> goLeft = gameSrv.goLeft();
-        ihm.printPlateau((int[][]) goLeft.get(GameService.KEY_PLATEAU));
+    public void startGame(int[][] plateau, int score) {
+        gameSrv.startGame(plateau, score);
+        updateWindow(plateau, score);
     }
 
-    private void setScore(int score) {
-//        this.score = score;
+    public void goLeft() {
+        Map<String, Object> goLeft = gameSrv.goLeft();
+        updateWindow((int[][]) goLeft.get(GameService.KEY_PLATEAU), (int) goLeft.get(GameService.KEY_SCORE));
     }
 
     public void goRight() {
-        Map<String, Object> goLeft = gameSrv.goRight();
-        ihm.printPlateau((int[][]) goLeft.get(GameService.KEY_PLATEAU));
+        Map<String, Object> goRight = gameSrv.goRight();
+        updateWindow((int[][]) goRight.get(GameService.KEY_PLATEAU), (int) goRight.get(GameService.KEY_SCORE));
     }
 
     public void goDown() {
-        Map<String, Object> goLeft = gameSrv.goDown();
-        ihm.printPlateau((int[][]) goLeft.get(GameService.KEY_PLATEAU));
+        Map<String, Object> goDown = gameSrv.goDown();
+        updateWindow((int[][]) goDown.get(GameService.KEY_PLATEAU), (int) goDown.get(GameService.KEY_SCORE));
     }
 
     public void goUp() {
-        Map<String, Object> goLeft = gameSrv.goUp();
-        ihm.printPlateau((int[][]) goLeft.get(GameService.KEY_PLATEAU));
+        Map<String, Object> goUp = gameSrv.goUp();
+        updateWindow((int[][]) goUp.get(GameService.KEY_PLATEAU), (int) goUp.get(GameService.KEY_SCORE));
+    }
+
+    private void updateWindow(int[][] plateau, int score) {
+        ihm.printPlateau(plateau);
+        ihm.setScore(score);
     }
 
     private void initaliseJFrameWindow() {
@@ -66,7 +72,8 @@ public class Plateau implements Cloneable {
             java.util.logging.Logger.getLogger(Window.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
     }
-    public GameService getGame(){
+
+    public GameService getGame() {
         return gameSrv;
     }
 }

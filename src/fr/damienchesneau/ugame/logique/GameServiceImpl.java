@@ -1,6 +1,7 @@
 package fr.damienchesneau.ugame.logique;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -357,11 +358,7 @@ class GameServiceImpl implements GameService {
             if (level == 2048) {
                 ingame = false;
                 win = true;
-                System.out.println("--------------------------- 2048 ------------------------------------");
-            }
-            if (level == 1024) {
-                win = true;
-//                System.out.println("--------------------------- 1024 ------------------------------------");
+//                System.out.println("--------------------------- 2048 ------------------------------------");
             }
         }
         return level;
@@ -383,14 +380,7 @@ class GameServiceImpl implements GameService {
         if (isWin()) {
             gameOver = false;
         } else {
-            boolean zero = true;
-            for (int i = 0; i < PLATEAU_HEIGHT; i++) {
-                for (int j = 0; j < PLATEAU_WIDTH; j++) {
-                    if (plateau[i][j] != 0) {
-                        zero = false;
-                    }
-                }
-            }
+            boolean zero = Arrays.asList(plateau).contains(0);
             if (zero) {
                 int oldScore = this.getScore();
                 GameService clonedGame = null;
@@ -430,7 +420,6 @@ class GameServiceImpl implements GameService {
         return getEmptyCellIds().size();
     }
 
-    @Override
     public int[][] cloneAMartice(int[][] toclone) {
         int[][] cloned = new int[PLATEAU_HEIGHT][PLATEAU_WIDTH];
         for (int i = 0; i < PLATEAU_HEIGHT; i++) {
@@ -455,6 +444,14 @@ class GameServiceImpl implements GameService {
             }
         }
         return ret;
+    }
+
+    @Override
+    public Map<String, Object> getDatas() {
+        Map<String, Object> toRet = new HashMap<>();
+        toRet.put(GameService.KEY_PLATEAU, getPlateau());
+        toRet.put(GameService.KEY_SCORE, getScore());
+        return toRet;
     }
 
     private final class PosAt {

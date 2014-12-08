@@ -19,7 +19,7 @@ public interface GameService extends Cloneable {
     public int[][] startGame();
 
     /**
-     *
+     * Compared to the upper fonction I return void because we already know the matrice
      * @param plateau a int matrice
      * @param score
      */
@@ -69,13 +69,6 @@ public interface GameService extends Cloneable {
      */
     public Map<String, Object> goUp();
 
-    /**
-     *
-     * @param toclone int matrice
-     * @return cloned int matirce
-     */
-    public int[][] cloneAMartice(int[][] toclone);
-
     public int[][] getPlateau();
 
     public GameService clone() throws CloneNotSupportedException;
@@ -91,4 +84,6 @@ public interface GameService extends Cloneable {
     public boolean equals(Object obj);
     
     public boolean isWin();
+    
+    public Map<String, Object> getDatas();
 }

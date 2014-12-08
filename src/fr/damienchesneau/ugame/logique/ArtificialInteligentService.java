@@ -1,6 +1,5 @@
 package fr.damienchesneau.ugame.logique;
 
-import fr.damienchesneau.ugame.client.Plateau;
 import java.util.Map;
 
 /**
