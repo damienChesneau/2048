@@ -23,7 +23,7 @@ class ArtificialInteligentServiceMinMax implements ArtificialInteligentService {
                 if (!game.isGameOver()) {
                     if (!game.isWin()) {
                         DirectionChoose bestDirection = getBestPlat(game.clone());
-//                        System.out.println("bBest dir = " + bestDirection.getDirection().name() + " Score = " + bestDirection.getScore() + " empty=" + game.getNumberOfEmptyCells());
+                        System.out.println("bBest dir = " + bestDirection.getDirection().name() + " Score = " + bestDirection.getScore() + " empty=" + game.getNumberOfEmptyCells());
                         if (game.getNumberOfEmptyCells() == 1) {
                             System.out.println("dfejhr");
                             break;
@@ -33,7 +33,7 @@ class ArtificialInteligentServiceMinMax implements ArtificialInteligentService {
                         } else {
                             if (bestDirection.getGame().isWin()) {
                                 gameSolve = true;
-                                System.out.println("scccsdcdscdscdscsdcsddcdccdccccccccccccccccccccccccccccccccccccccccccccccccccccccc");
+                                System.out.println("Computer win !");
                                 return null;
                             } else {
 
@@ -41,7 +41,7 @@ class ArtificialInteligentServiceMinMax implements ArtificialInteligentService {
                             break;
                         }
                     } else {
-                        System.out.println("You win !");
+                        System.out.println("Computer win !");
                     }
                 } else {
                     System.out.println("Game Over score = " + game.getScore());
@@ -112,30 +112,26 @@ class ArtificialInteligentServiceMinMax implements ArtificialInteligentService {
         List<DirectionChoose> calulatedDirection = new ArrayList<DirectionChoose>();
 
         GameService plateau = (GameService) plateauTOClone.clone();
-        Map<String, Object> goDown = plateau.goDown();
-        int scoreDown = (int) goDown.get(GameService.KEY_SCORE);
         if (!plateau.isGameOver()) {
+            Map<String, Object> goDown = plateau.goDown();
+            int scoreDown = (int) goDown.get(GameService.KEY_SCORE);
+
             calulatedDirection.add(new DirectionChoose(scoreDown + plateau.getNumberOfEmptyCells(), Direction.DOWN, plateau));
-        }
-        plateau = (GameService) plateauTOClone.clone();
-        Map<String, Object> goUp = plateau.goUp();
-        int scoreUp = (int) goUp.get(GameService.KEY_SCORE);
-        int[][] platgoUp = (int[][]) goUp.get(GameService.KEY_PLATEAU);
-        if (!plateau.isGameOver()) {
+
+            plateau = (GameService) plateauTOClone.clone();
+            Map<String, Object> goUp = plateau.goUp();
+            int scoreUp = (int) goUp.get(GameService.KEY_SCORE);
+            int[][] platgoUp = (int[][]) goUp.get(GameService.KEY_PLATEAU);
             calulatedDirection.add(new DirectionChoose(scoreUp + plateau.getNumberOfEmptyCells(), Direction.UP, plateau));
-        }
-        plateau = (GameService) plateauTOClone.clone();
-        Map<String, Object> goRight = plateau.goRight();
-        int scoreRight = (int) goRight.get(GameService.KEY_SCORE);
-        int[][] patgoRight = (int[][]) goRight.get(GameService.KEY_PLATEAU);
-        if (!plateau.isGameOver()) {
+            plateau = (GameService) plateauTOClone.clone();
+            Map<String, Object> goRight = plateau.goRight();
+            int scoreRight = (int) goRight.get(GameService.KEY_SCORE);
+            int[][] patgoRight = (int[][]) goRight.get(GameService.KEY_PLATEAU);
             calulatedDirection.add(new DirectionChoose(scoreRight + plateau.getNumberOfEmptyCells(), Direction.RIGHT, plateau));
-        }
-        plateau = (GameService) plateauTOClone.clone();
-        Map<String, Object> goLeft = plateau.goLeft();
-        int scoreLeft = (int) goLeft.get(GameService.KEY_SCORE);
-        int[][] platgoLeft = (int[][]) goLeft.get(GameService.KEY_PLATEAU);
-        if (!plateau.isGameOver()) {
+            plateau = (GameService) plateauTOClone.clone();
+            Map<String, Object> goLeft = plateau.goLeft();
+            int scoreLeft = (int) goLeft.get(GameService.KEY_SCORE);
+            int[][] platgoLeft = (int[][]) goLeft.get(GameService.KEY_PLATEAU);
             calulatedDirection.add(new DirectionChoose(scoreLeft + plateau.getNumberOfEmptyCells(), Direction.LEFT, plateau));
         }
         return calulatedDirection;

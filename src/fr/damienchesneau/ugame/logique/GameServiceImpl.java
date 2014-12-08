@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -21,6 +23,7 @@ class GameServiceImpl implements GameService {
     private int score = 0;
     private boolean ingame = false;
     private boolean win = false;
+    private int updatePlateau = 0;
 
     public GameServiceImpl() {
         ingame = true;
@@ -71,6 +74,7 @@ class GameServiceImpl implements GameService {
             }
         }
         leftGravity();
+        updatePlateau++;
         if (!placeNewValue()) {
             return formatTheRet();
         }
@@ -135,6 +139,7 @@ class GameServiceImpl implements GameService {
         }
         rightGravity();
         placeNewValue();
+        updatePlateau++;
         return formatTheRet();
     }
 
@@ -182,6 +187,7 @@ class GameServiceImpl implements GameService {
         }
         downGravity();
         placeNewValue();
+        updatePlateau++;
         return formatTheRet();
     }
 
@@ -230,6 +236,7 @@ class GameServiceImpl implements GameService {
         }
         upGravity();
         placeNewValue();
+        updatePlateau++;
         return formatTheRet();
     }
 
@@ -272,7 +279,6 @@ class GameServiceImpl implements GameService {
     }
 
     private void gameOver() {
-        System.err.println("Game over");
         gameOver = true;
         ingame = false;
     }
@@ -355,12 +361,13 @@ class GameServiceImpl implements GameService {
             }
             if (level == 1024) {
                 win = true;
-                System.out.println("--------------------------- 1024 ------------------------------------");
+//                System.out.println("--------------------------- 1024 ------------------------------------");
             }
         }
         return level;
     }
 
+    @Override
     public boolean isWin() {
         return win;
     }
@@ -370,27 +377,37 @@ class GameServiceImpl implements GameService {
         return cloneAMartice(plateau);
     }
 
+    @Override
     public boolean isGameOver() {
-//        boolean gameOver = false;
-//
-//        if (isWin()) {
-//            gameOver = true;
-//        } else {
-//            if (getNumberOfEmptyCells() == 0) { //if no more available cells
-//                GameService copyBoard = (GameService) this.clone();
-
-//                if (copyBoard.goUp()== 0
-//                        && copyBoard.move(Direction.RIGHT) == 0
-//                        && copyBoard.move(Direction.DOWN) == 0
-//                        && copyBoard.move(Direction.LEFT) == 0) {
-//                    gameOver = true;
-//                }
-
-                //copyBoard=null;
-//            }
-//        }
-
-//        return gameOver;
+        boolean gameOver = false;
+        if (isWin()) {
+            gameOver = false;
+        } else {
+            boolean zero = true;
+            for (int i = 0; i < PLATEAU_HEIGHT; i++) {
+                for (int j = 0; j < PLATEAU_WIDTH; j++) {
+                    if (plateau[i][j] != 0) {
+                        zero = false;
+                    }
+                }
+            }
+            if (zero) {
+                int oldScore = this.getScore();
+                GameService clonedGame = null;
+                try {
+                    clonedGame = ((GameService) this.clone());
+                    if ((((int) clonedGame.goLeft().get(GameService.KEY_SCORE)) == oldScore)
+                            && (((int) clonedGame.goDown().get(GameService.KEY_SCORE)) == oldScore)
+                            && (((int) clonedGame.goUp().get(GameService.KEY_SCORE)) == oldScore)
+                            && (((int) clonedGame.goRight().get(GameService.KEY_SCORE)) == oldScore)) {
+                        gameOver = true;
+                    }
+                } catch (CloneNotSupportedException ex) {
+                    Logger.getLogger(GameServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+                    return false;
+                }
+            }
+        }
         return gameOver;
     }
 
@@ -403,14 +420,17 @@ class GameServiceImpl implements GameService {
         return ingame;
     }
 
+    @Override
     public int getScore() {
         return score;
     }
 
+    @Override
     public int getNumberOfEmptyCells() {
         return getEmptyCellIds().size();
     }
 
+    @Override
     public int[][] cloneAMartice(int[][] toclone) {
         int[][] cloned = new int[PLATEAU_HEIGHT][PLATEAU_WIDTH];
         for (int i = 0; i < PLATEAU_HEIGHT; i++) {
