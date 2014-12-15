@@ -16,7 +16,7 @@ import java.util.logging.Logger;
  */
 public class FontGame {
 
-    public enum FontGameAvalable {
+    public static enum FontGameAvalable {
         CLEAR_SANS_BOLD,CLEAR_SANS_BOLD_ITALIC,CLEAR_SANS_ITALIC,CLEAR_SANS_LIGHT,CLEAR_SANS_MEDIUM,CLEAR_SANS_MEDIUM_ITALIC,CLEAR_SANS_REGULAR,CLEAR_SANS_THIN
     }
 
@@ -69,12 +69,6 @@ public class FontGame {
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         try {
             ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, getFile(fga)));
-        } catch (FontFormatException ex) {
-            Logger.getLogger(FontGame.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(FontGame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try {
             font = Font.createFont(Font.TRUETYPE_FONT, getFile(fga));
         } catch (FontFormatException ex) {
             Logger.getLogger(FontGame.class.getName()).log(Level.SEVERE, null, ex);
@@ -82,6 +76,5 @@ public class FontGame {
             Logger.getLogger(FontGame.class.getName()).log(Level.SEVERE, null, ex);
         }
         return font.getFontName();
-
     }
 }

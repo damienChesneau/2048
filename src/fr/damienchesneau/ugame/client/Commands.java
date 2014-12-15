@@ -1,11 +1,7 @@
 package fr.damienchesneau.ugame.client;
 
-import fr.damienchesneau.ugame.logique.ArtificialInteligentService;
-import fr.damienchesneau.ugame.logique.LogiqueFactory;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *

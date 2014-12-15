@@ -824,10 +824,10 @@ class Window extends javax.swing.JFrame {
                 jlabel.setText("128");
                 jpanel.setBackground(level7Color.getBackgroundColor());
                 break;
-            case 254:
+            case 256:
                 jlabel.setForeground(level8Color.getFontColor());
                 jlabel.setFont(level8Color.getFont());
-                jlabel.setText("254");
+                jlabel.setText("256");
                 jpanel.setBackground(level8Color.getBackgroundColor());
                 break;
             case 512:

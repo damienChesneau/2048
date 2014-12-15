@@ -2,8 +2,6 @@ package fr.damienchesneau.ugame.logique;
 
 import fr.damienchesneau.ugame.logique.entitys.Direction;
 import fr.damienchesneau.ugame.logique.entitys.DirectionChoose;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -86,7 +84,11 @@ class ArtificialInteligentServiceMinMax implements ArtificialInteligentService {
     private DirectionChoose getBestDirection(GameService p) throws CloneNotSupportedException {
         List<DirectionChoose> allDirectionsTested = testAllDirections(p);
         int size = allDirectionsTested.size();
-        DirectionChoose bestDirection = allDirectionsTested.get(0);
+        DirectionChoose bestDirection = null;
+        if(!allDirectionsTested.isEmpty()){
+            bestDirection = allDirectionsTested.get(0);
+        }
+        
         for (int i = 1; i < size; i++) {
             if (allDirectionsTested.get(i).getScore() > bestDirection.getScore()) {
                 bestDirection = allDirectionsTested.get(i);

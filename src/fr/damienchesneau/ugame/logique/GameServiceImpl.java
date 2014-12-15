@@ -50,9 +50,9 @@ class GameServiceImpl implements GameService {
     }
 
     public Map<String, Object> goLeft() {
-        if (isGameOver()) {
-            return formatTheRet();
-        }
+//        if (isGameOver()) {
+//            return formatTheRet();
+//        }
         leftGravity();
         for (int i = 0; i < PLATEAU_HEIGHT; i++) {
             boolean justOneMariedByLine = true;
@@ -94,9 +94,9 @@ class GameServiceImpl implements GameService {
     }
 
     private void leftGravity() {
-        if (isGameOver()) {
-            return;
-        }
+//        if (isGameOver()) {
+//            return;
+//        }
         for (int i = 0; i < PLATEAU_HEIGHT; i++) {
             boolean justOneMariedByLine = true;
             for (int j = PLATEAU_WIDTH - 1; j > 0; j--) {
@@ -114,9 +114,9 @@ class GameServiceImpl implements GameService {
     }
 
     public Map<String, Object> goRight() {
-        if (isGameOver()) {
-            return formatTheRet();
-        }
+//        if (isGameOver()) {
+//            return formatTheRet();
+//        }
         rightGravity();
         for (int i = 0; i < PLATEAU_HEIGHT; i++) {
             boolean justOneMariedByLine = true;
@@ -162,13 +162,13 @@ class GameServiceImpl implements GameService {
     }
 
     public Map<String, Object> goDown() {
-        if (gameOver) {
-            return formatTheRet();
-        }
+//        if (isGameOver()) {
+//            return formatTheRet();
+//        }
         downGravity();
         for (int j = 0; j < PLATEAU_WIDTH; j++) {//LIGNES
             boolean justOneMariedByLine = true;
-            for (int i = PLATEAU_HEIGHT - 1; i > -1; i--) {//COLONES 
+            for (int i = PLATEAU_HEIGHT-1 ; i > -1; i--) {//COLONES 
                 if (plateau[j][i] != 0) {
                     int upLevel = 0;
                     if (i + 1 != 4 && (upLevel = addLevel(plateau[j][i + 1], plateau[j][i])) == 0) {
@@ -211,9 +211,9 @@ class GameServiceImpl implements GameService {
 
     @Override
     public Map<String, Object> goUp() {
-        if (gameOver) {
-            return formatTheRet();
-        }
+//        if (isGameOver()) {
+//            return formatTheRet();
+//        }
         upGravity();
         for (int j = 0; j < PLATEAU_WIDTH; j++) {
             boolean justOneMariedByLine = true;
@@ -268,7 +268,6 @@ class GameServiceImpl implements GameService {
         }
         List<Integer> ids = getEmptyCellIds();
         if (ids.size() == 0) {
-//            C = true;
             gameOver();
             return null;
         }
@@ -376,12 +375,13 @@ class GameServiceImpl implements GameService {
 
     @Override
     public boolean isGameOver() {
-        boolean gameOver = false;
+        boolean gameOverRet = false;
         if (isWin()) {
-            gameOver = false;
+            gameOverRet = false;
         } else {
             boolean zero = Arrays.asList(plateau).contains(0);
-            if (zero) {
+            System.out.println(zero);
+            if (!zero) {
                 int oldScore = this.getScore();
                 GameService clonedGame = null;
                 try {
@@ -390,7 +390,7 @@ class GameServiceImpl implements GameService {
                             && (((int) clonedGame.goDown().get(GameService.KEY_SCORE)) == oldScore)
                             && (((int) clonedGame.goUp().get(GameService.KEY_SCORE)) == oldScore)
                             && (((int) clonedGame.goRight().get(GameService.KEY_SCORE)) == oldScore)) {
-                        gameOver = true;
+                        gameOverRet = true;
                     }
                 } catch (CloneNotSupportedException ex) {
                     Logger.getLogger(GameServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
@@ -398,7 +398,7 @@ class GameServiceImpl implements GameService {
                 }
             }
         }
-        return gameOver;
+        return gameOverRet;
     }
 
     @Override
