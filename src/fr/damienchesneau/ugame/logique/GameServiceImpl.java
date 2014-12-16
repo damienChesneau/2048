@@ -39,7 +39,8 @@ class GameServiceImpl implements GameService {
     @Override
     public int[][] startGame() {
         initializePlateau();
-        return getPlateau();
+        score = 0;
+        return plateau;
     }
 
     public void startGame(int[][] plateau, int score) {

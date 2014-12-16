@@ -22,7 +22,8 @@ public class Plateau implements Cloneable {
     }
 
     public void startGame() {
-        this.startGame(gameSrv.startGame(), 0);
+        int[][] startGame = gameSrv.startGame();
+        updateWindow(startGame, 0);
     }
 
     public void startGame(int[][] plateau, int score) {

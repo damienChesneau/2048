@@ -1,12 +1,8 @@
 package fr.damienchesneau.ugame.client;
 
 import fr.damienchesneau.ugame.client.font.FontGame;
-import fr.damienchesneau.ugame.logique.ArtificialInteligentService;
-import fr.damienchesneau.ugame.logique.GameService;
-import fr.damienchesneau.ugame.logique.LogiqueFactory;
 import java.awt.Color;
 import java.awt.Font;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;

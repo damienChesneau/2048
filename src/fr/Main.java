@@ -15,8 +15,24 @@ public class Main {
     public static void main(String[] args) {
         Plateau plateau = new Plateau();
         plateau.startGame();
-        if (args.length == 2 && args[0].equals("-s")) {
-            UserPreference.setsSaveFile(args[1]);
+        if (args.length == 2 ) {
+            switch (args[0]) {
+                case "-s":
+                    UserPreference.setsSaveFile(args[1]);
+                    break;
+                case "-r":
+                    UserPreference.setReplayFileName(args[1]);
+                    break;
+            }
+        }else if(args.length == 1 ){
+            switch (args[0]) {
+                case "-a":
+                    UserPreference.setsSaveFile(args[1]);
+                    break;
+                case "-n":
+                    UserPreference.setReplayFileName(args[1]);
+                    break;
+            }
         }
         System.out.println(UserPreference.getsSaveFile());
     }

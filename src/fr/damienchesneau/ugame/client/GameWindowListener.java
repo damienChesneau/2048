@@ -25,6 +25,7 @@ class GameWindowListener extends WindowAdapter {
     @Override
     public void windowClosing(WindowEvent e) {
         super.windowClosing(e);
+        System.out.println("out");
 //        try {
 //            savingSrv.saveGame(plateau.getPlateau(),null);
 //        } catch (IOException ex) {
