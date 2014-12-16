@@ -27,10 +27,10 @@ public class Main {
         }else if(args.length == 1 ){
             switch (args[0]) {
                 case "-a":
-                    UserPreference.setsSaveFile(args[1]);
+                    UserPreference.setAleatoire(true);
                     break;
                 case "-n":
-                    UserPreference.setReplayFileName(args[1]);
+                    UserPreference.setAleatoire(true);
                     break;
             }
         }

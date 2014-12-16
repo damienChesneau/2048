@@ -50,15 +50,16 @@ public class Plateau implements Cloneable {
         Map<String, Object> goUp = gameSrv.goUp();
         updateWindow((int[][]) goUp.get(GameService.KEY_PLATEAU), (int) goUp.get(GameService.KEY_SCORE));
     }
-private static int nb = 0;
+    private static int nb = 0;
+
     private void updateWindow(int[][] plateau, int score) {
-        nb ++;
+        nb++;
         ihm.printPlateau(plateau);
         ihm.setScore(score);
-        if(nb >=110){
+        if (nb >= 110) {
             System.out.println("edsqw");
         }
-        if (gameSrv.isGameOver()){
+        if (gameSrv.isGameOver()) {
             ihm.infoGameOver();
         }
     }

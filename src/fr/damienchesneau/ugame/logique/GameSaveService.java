@@ -1,6 +1,5 @@
 package fr.damienchesneau.ugame.logique;
 
-import fr.damienchesneau.ugame.logique.entitys.Levels;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -10,7 +9,7 @@ import java.io.IOException;
  */
 public interface GameSaveService {
 
-    public int[][] getGaveByFileName(String name);
+    public GameService getGaveByFileName(final String name);
 
-    public void saveGame(final Levels[][] plateau,final String fileName) throws FileNotFoundException, IOException;
+    public void saveGame(final GameService plateau,final String fileName) throws FileNotFoundException, IOException;
 }

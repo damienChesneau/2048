@@ -1,9 +1,12 @@
 package fr.damienchesneau.ugame.logique;
 
+import fr.damienchesneau.ugame.logique.entitys.Direction;
+import fr.damienchesneau.ugame.logique.entitys.HistoryItem;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -19,15 +22,18 @@ class GameServiceImpl implements GameService {
 
     private final int PLATEAU_HEIGHT = 4;
     private final int PLATEAU_WIDTH = 4;
-    private int[][] plateau; // i colones J lignes 
-    private boolean gameOver = false;
+
+    private LinkedList<HistoryItem> gameHistory = new LinkedList<>();
+    private int[][] plateau; // i colones J lignes
     private int score = 0;
+    private int updatePlateau = 0;
+    private boolean gameOver = false;
     private boolean ingame = false;
     private boolean win = false;
-    private int updatePlateau = 0;
 
     public GameServiceImpl() {
         ingame = true;
+        gameHistory = new LinkedList<>();
     }
 
     public GameServiceImpl(int[][] plateau, int score) {
@@ -38,22 +44,36 @@ class GameServiceImpl implements GameService {
 
     @Override
     public int[][] startGame() {
+        gameHistory = new LinkedList<>();
         initializePlateau();
         score = 0;
+        ingame = true;
         return plateau;
     }
 
+    @Override
     public void startGame(int[][] plateau, int score) {
+        gameHistory = new LinkedList<>();
         this.plateau = plateau;
         setScore(score);
+        placeNewValue();
         placeNewValue();
         ingame = true;
     }
 
+    @Override
+    public GameService startGame(List<HistoryItem> history) {
+        gameHistory.addAll(history);
+        ingame = true;
+        return this;
+    }
+
+    @Override
     public Map<String, Object> goLeft() {
-//        if (isGameOver()) {
-//            return formatTheRet();
-//        }
+        return goLeft(true);
+    }
+
+    private Map<String, Object> goLeft(boolean updateHisto) {
         leftGravity();
         for (int i = 0; i < PLATEAU_HEIGHT; i++) {
             boolean justOneMariedByLine = true;
@@ -77,10 +97,20 @@ class GameServiceImpl implements GameService {
         }
         leftGravity();
         updatePlateau++;
-        if (!placeNewValue()) {
-            return formatTheRet();
+        if (updateHisto) {
+            updateLastHistory(Direction.LEFT);
         }
         return formatTheRet();
+    }
+
+    private void updateLastHistory(Direction dir) {
+        placeNewValue();
+        if (gameHistory.size() >= 2) {
+            HistoryItem get = gameHistory.get(gameHistory.size() - 1);
+            if (get != null) {
+                get.setDirection(dir);
+            }
+        }
     }
 
     private Map<String, Object> formatTheRet() {
@@ -115,9 +145,10 @@ class GameServiceImpl implements GameService {
     }
 
     public Map<String, Object> goRight() {
-//        if (isGameOver()) {
-//            return formatTheRet();
-//        }
+        return goRight(true);
+    }
+
+    public Map<String, Object> goRight(boolean updateHisto) {
         rightGravity();
         for (int i = 0; i < PLATEAU_HEIGHT; i++) {
             boolean justOneMariedByLine = true;
@@ -139,8 +170,10 @@ class GameServiceImpl implements GameService {
                 }
             }
         }
+        if (updateHisto) {
+            updateLastHistory(Direction.RIGHT);
+        }
         rightGravity();
-        placeNewValue();
         updatePlateau++;
         return formatTheRet();
     }
@@ -169,7 +202,7 @@ class GameServiceImpl implements GameService {
         downGravity();
         for (int j = 0; j < PLATEAU_WIDTH; j++) {//LIGNES
             boolean justOneMariedByLine = true;
-            for (int i = PLATEAU_HEIGHT-1 ; i > -1; i--) {//COLONES 
+            for (int i = PLATEAU_HEIGHT - 1; i > -1; i--) {//COLONES 
                 if (plateau[j][i] != 0) {
                     int upLevel = 0;
                     if (i + 1 != 4 && (upLevel = addLevel(plateau[j][i + 1], plateau[j][i])) == 0) {
@@ -187,8 +220,9 @@ class GameServiceImpl implements GameService {
                 }
             }
         }
+        updateLastHistory(Direction.DOWN);
         downGravity();
-        placeNewValue();
+//        placeNewValue();
         updatePlateau++;
         return formatTheRet();
     }
@@ -236,8 +270,9 @@ class GameServiceImpl implements GameService {
                 }
             }
         }
+        updateLastHistory(Direction.UP);
         upGravity();
-        placeNewValue();
+//        placeNewValue();
         updatePlateau++;
         return formatTheRet();
     }
@@ -313,10 +348,15 @@ class GameServiceImpl implements GameService {
         return idDispo;
     }
 
+    private void placeValueWithData(int x, int y, int value) {
+        plateau[x][y] = value;
+    }
+
     private boolean placeNewValue() {
         PosAt firstElement = newValue();
         if (firstElement != null && plateau[firstElement.getX()][firstElement.getY()] == 0) {
             plateau[firstElement.getX()][firstElement.getY()] = firstElement.getValue();
+            gameHistory.addLast(new HistoryItem(firstElement.getValue(), firstElement.getX(), firstElement.getY()));
         } else {
 //            placeNewValue();
         }
@@ -346,6 +386,7 @@ class GameServiceImpl implements GameService {
                 plateau[i][j] = 0;
             }
         }
+        placeNewValue();
         placeNewValue();
         ingame = true;
     }
@@ -452,6 +493,10 @@ class GameServiceImpl implements GameService {
         toRet.put(GameService.KEY_PLATEAU, getPlateau());
         toRet.put(GameService.KEY_SCORE, getScore());
         return toRet;
+    }
+
+    public List<HistoryItem> getGameHistory() {
+        return gameHistory;
     }
 
     private final class PosAt {

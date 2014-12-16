@@ -18,6 +18,7 @@ import javax.swing.SwingConstants;
 class Window extends javax.swing.JFrame {
 
     private final Commands cmds;
+    
     Window(Commands commands) {
         initComponents();
         cmds = commands;

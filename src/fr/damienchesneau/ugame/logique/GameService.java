@@ -1,5 +1,7 @@
 package fr.damienchesneau.ugame.logique;
 
+import fr.damienchesneau.ugame.logique.entitys.HistoryItem;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -10,7 +12,6 @@ public interface GameService extends Cloneable {
 
     public static final String KEY_PLATEAU = "plateau";
     public static final String KEY_SCORE = "score";
-
     /**
      * initialise all for start a game.
      *
@@ -25,6 +26,7 @@ public interface GameService extends Cloneable {
      */
     public void startGame(int[][] plateau,int score);
 
+    public GameService startGame(List<HistoryItem> history);
     /**
      * GO all to left      <code>
      * Map<String, Object> ret = new HashMap<String, Object>(); <br>
@@ -86,4 +88,6 @@ public interface GameService extends Cloneable {
     public boolean isWin();
     
     public Map<String, Object> getDatas();
+    
+    public List<HistoryItem> getGameHistory();
 }
