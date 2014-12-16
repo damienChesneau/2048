@@ -1,8 +1,12 @@
 package fr.damienchesneau.ugame.client;
 
 import fr.damienchesneau.ugame.client.font.FontGame;
+import fr.damienchesneau.ugame.logique.ArtificialInteligentService;
+import fr.damienchesneau.ugame.logique.GameService;
+import fr.damienchesneau.ugame.logique.LogiqueFactory;
 import java.awt.Color;
 import java.awt.Font;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
@@ -17,15 +21,17 @@ import javax.swing.SwingConstants;
  */
 class Window extends javax.swing.JFrame {
 
-    Window(Commands keyl) {
+    private final Commands cmds;
+    Window(Commands commands) {
         initComponents();
+        cmds = commands;
         this.getContentPane().setBackground(Color.WHITE);
         this.jPanelCommands.setBackground(Color.WHITE);
-        addKeyListener(keyl);
+        addKeyListener(commands);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        addWindowListener(new GameWindowListener(this, keyl.getPlateau()));
-        this.jButton1.setFont(new Font(fontGameName, 50, 20));
-        this.jButton2.setFont(new Font(fontGameName, 50, 20));
+        addWindowListener(new GameWindowListener(this, commands.getPlateau()));
+        this.jButtonRetry.setFont(new Font(fontGameName, 50, 20));
+        this.jButtonSolveGame.setFont(new Font(fontGameName, 50, 20));
         this.jLabel1.setFont(new Font(fontGameName, 50, 20));
         this.jLabel2.setFont(new Font(fontGameName, 50, 15));
         pack();
@@ -38,11 +44,11 @@ class Window extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanelCommands = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        jButtonRetry = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        jButtonSolveGame = new javax.swing.JButton();
         jPanelPlateau = new javax.swing.JPanel();
         jPanelColumn1Cell1 = new javax.swing.JPanel();
         jLabelColumn1Cell1 = new javax.swing.JLabel();
@@ -82,12 +88,12 @@ class Window extends javax.swing.JFrame {
 
         jPanelCommands.setPreferredSize(new java.awt.Dimension(445, 80));
 
-        jButton1.setBackground(new java.awt.Color(143, 122, 102));
-        jButton1.setForeground(new java.awt.Color(249, 246, 242));
-        jButton1.setText("Retry");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonRetry.setBackground(new java.awt.Color(143, 122, 102));
+        jButtonRetry.setForeground(new java.awt.Color(249, 246, 242));
+        jButtonRetry.setText("Retry");
+        jButtonRetry.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButtonRetryActionPerformed(evt);
             }
         });
 
@@ -123,12 +129,12 @@ class Window extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jButton2.setBackground(new java.awt.Color(143, 122, 102));
-        jButton2.setForeground(new java.awt.Color(249, 246, 242));
-        jButton2.setText("Solve");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jButtonSolveGame.setBackground(new java.awt.Color(143, 122, 102));
+        jButtonSolveGame.setForeground(new java.awt.Color(249, 246, 242));
+        jButtonSolveGame.setText("Solve");
+        jButtonSolveGame.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jButtonSolveGameActionPerformed(evt);
             }
         });
 
@@ -137,9 +143,9 @@ class Window extends javax.swing.JFrame {
         jPanelCommandsLayout.setHorizontalGroup(
             jPanelCommandsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelCommandsLayout.createSequentialGroup()
-                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButtonRetry, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButtonSolveGame, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -148,8 +154,8 @@ class Window extends javax.swing.JFrame {
             .addGroup(jPanelCommandsLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelCommandsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonSolveGame, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonRetry, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -638,17 +644,24 @@ class Window extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void jButtonRetryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRetryActionPerformed
+        this.cmds.retry();
+    }//GEN-LAST:event_jButtonRetryActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    public void infoGameOver(){
-        JOptionPane.showMessageDialog(this, "Game Over");
+    private void jButtonSolveGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSolveGameActionPerformed
+       this.cmds.solveGame();
+    }//GEN-LAST:event_jButtonSolveGameActionPerformed
+    /**
+     *
+     * @return if the user want's to retry or not.
+     */
+    public boolean infoGameOver() {
+        if(JOptionPane.showConfirmDialog(this, "Game over !\n You want to retry ? ", "Game over", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE) == JOptionPane.YES_OPTION) {
+            return true;
+        } 
+        return false;
     }
+
     public void printPlateau(int[][] tab) {
         initPlat();
         setColumn1Cell1Value(tab[0][0]);
@@ -667,11 +680,6 @@ class Window extends javax.swing.JFrame {
         setColumn4Cell2Value(tab[3][1]);
         setColumn4Cell3Value(tab[3][2]);
         setColumn4Cell4Value(tab[3][3]);
-//        for(int i = 0 ; i < 4 ; i++){
-//            for(int j = 0 ; j < 4 ; j++){
-//                System.out.println("j = "+j+ " i="+i+" content="+tab[i][j]);
-//            }
-//        }
     }
 
     private void initPlat() {
@@ -852,9 +860,10 @@ class Window extends javax.swing.JFrame {
         pack();
     }
 
-    public void setScore(int score){
+    public void setScore(int score) {
         this.jLabel2.setText(String.valueOf(score));
     }
+
     private class PanelConfig {
 
         private final Font font;
@@ -897,8 +906,8 @@ class Window extends javax.swing.JFrame {
     private final PanelConfig level10Color = new PanelConfig(new Font(fontGameName, 107, 35), new Color(237, 197, 63, 255), new Color(249, 246, 242, 255));
     private final PanelConfig level11Color = new PanelConfig(new Font(fontGameName, 120, 35), new Color(237, 194, 46, 255), new Color(249, 246, 242, 255));
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButtonRetry;
+    private javax.swing.JButton jButtonSolveGame;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabelColumn1Cell1;

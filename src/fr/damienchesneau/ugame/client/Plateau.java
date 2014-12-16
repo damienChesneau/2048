@@ -22,7 +22,7 @@ public class Plateau implements Cloneable {
     }
 
     public void startGame() {
-        int[][] startGame = gameSrv.startGame();
+        this.startGame(gameSrv.startGame(), 0);
     }
 
     public void startGame(int[][] plateau, int score) {
@@ -58,7 +58,7 @@ private static int nb = 0;
             System.out.println("edsqw");
         }
         if (gameSrv.isGameOver()){
-            JOptionPane.showMessageDialog(ihm, "Game over !!!","Game over",JOptionPane.INFORMATION_MESSAGE);
+            ihm.infoGameOver();
         }
     }
 

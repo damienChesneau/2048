@@ -380,7 +380,6 @@ class GameServiceImpl implements GameService {
             gameOverRet = false;
         } else {
             boolean zero = Arrays.asList(plateau).contains(0);
-            System.out.println(zero);
             if (!zero) {
                 int oldScore = this.getScore();
                 GameService clonedGame = null;

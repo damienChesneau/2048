@@ -1,7 +1,13 @@
 package fr.damienchesneau.ugame.client;
 
+import fr.damienchesneau.ugame.logique.ArtificialInteligentService;
+import fr.damienchesneau.ugame.logique.GameService;
+import fr.damienchesneau.ugame.logique.LogiqueFactory;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -41,12 +47,6 @@ class Commands implements KeyListener {
             default:
                 System.out.println("Not Supported key");
         }
-//        ArtificialInteligentService df = LogiqueFactory.getArtificialInteligentService();
-//        try {
-//            df.solveGame((Plateau) plateau.clone());
-//        } catch (CloneNotSupportedException ex) {
-//            Logger.getLogger(Plateau.class.getName()).log(Level.SEVERE, null, ex);
-//        }
     }
 
     @Override
@@ -54,5 +54,17 @@ class Commands implements KeyListener {
     }
     public Plateau getPlateau(){
         return this.plateau;
+    }
+    public final void solveGame(){
+        ArtificialInteligentService df = LogiqueFactory.getArtificialInteligentService();
+        try {
+            Map<String, Object> solveGame = df.solveGame(plateau.getGame().clone());
+            plateau.startGame((int[][]) solveGame.get(GameService.KEY_PLATEAU), (int) solveGame.get(GameService.KEY_SCORE));
+        } catch (CloneNotSupportedException ex) {
+            Logger.getLogger(Plateau.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public final void retry(){
+        plateau.startGame();
     }
 }
