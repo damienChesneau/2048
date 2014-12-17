@@ -65,6 +65,27 @@ class GameServiceImpl implements GameService {
     public GameService startGame(List<HistoryItem> history) {
         gameHistory.addAll(history);
         ingame = true;
+        setScore(0);
+        for (HistoryItem historyItem : history) {
+            plateau[historyItem.getVertical()][historyItem.getVertical()] = historyItem.getStartItem();
+            Direction d = null;
+            if ((d = historyItem.getDirection()) != null) {
+                switch (d) {
+                    case LEFT:
+                        goLeft(false);
+                        break;
+                    case RIGHT:
+                        goRight(false);
+                        break;
+                    case UP:
+                        goUp(false);
+                        break;
+                    case DOWN:
+                        goDown(false);
+                        break;
+                }
+            }
+        }
         return this;
     }
 
@@ -195,7 +216,12 @@ class GameServiceImpl implements GameService {
         }
     }
 
+    @Override
     public Map<String, Object> goDown() {
+        return goDown(true);
+    }
+
+    public Map<String, Object> goDown(boolean history) {
 //        if (isGameOver()) {
 //            return formatTheRet();
 //        }
@@ -220,7 +246,9 @@ class GameServiceImpl implements GameService {
                 }
             }
         }
-        updateLastHistory(Direction.DOWN);
+        if (history) {
+            updateLastHistory(Direction.DOWN);
+        }
         downGravity();
 //        placeNewValue();
         updatePlateau++;
@@ -246,6 +274,10 @@ class GameServiceImpl implements GameService {
 
     @Override
     public Map<String, Object> goUp() {
+        return goUp(true);
+    }
+
+    public Map<String, Object> goUp(boolean history) {
 //        if (isGameOver()) {
 //            return formatTheRet();
 //        }
@@ -270,7 +302,9 @@ class GameServiceImpl implements GameService {
                 }
             }
         }
-        updateLastHistory(Direction.UP);
+        if (history) {
+            updateLastHistory(Direction.UP);
+        }
         upGravity();
 //        placeNewValue();
         updatePlateau++;

@@ -29,8 +29,8 @@ public class HistoryItem {
     @Override
     public String toString() {
         String dir = "ERROR";
-        if (direction != null) {
-            switch (direction) {
+        if (getDirection() != null) {
+            switch (getDirection()) {
                 case DOWN:
                     dir = "S";
                     break;
@@ -47,7 +47,23 @@ public class HistoryItem {
         } else {
             dir = "";
         }
-        return dir + startItem + vertical + horizontal;
+        return dir + getStartItem() + getVertical() + getHorizontal();
+    }
+
+    public int getStartItem() {
+        return startItem;
+    }
+
+    public int getHorizontal() {
+        return horizontal;
+    }
+
+    public int getVertical() {
+        return vertical;
+    }
+
+    public Direction getDirection() {
+        return direction;
     }
 
 }
