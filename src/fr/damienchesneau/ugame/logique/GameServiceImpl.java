@@ -66,8 +66,13 @@ class GameServiceImpl implements GameService {
         gameHistory.addAll(history);
         ingame = true;
         setScore(0);
+        plateau = new int[PLATEAU_HEIGHT][PLATEAU_WIDTH];
+        for (int i = 0; i < PLATEAU_HEIGHT; i++) {
+            for (int j = 0; j < PLATEAU_WIDTH; j++) {
+                plateau[i][j] = 0;
+            }
+        }
         for (HistoryItem historyItem : history) {
-            plateau[historyItem.getVertical()][historyItem.getVertical()] = historyItem.getStartItem();
             Direction d = null;
             if ((d = historyItem.getDirection()) != null) {
                 switch (d) {
@@ -85,6 +90,7 @@ class GameServiceImpl implements GameService {
                         break;
                 }
             }
+            plateau[historyItem.getHorizontal()-1][historyItem.getVertical()-1] = historyItem.getStartItem();
         }
         return this;
     }
@@ -390,7 +396,7 @@ class GameServiceImpl implements GameService {
         PosAt firstElement = newValue();
         if (firstElement != null && plateau[firstElement.getX()][firstElement.getY()] == 0) {
             plateau[firstElement.getX()][firstElement.getY()] = firstElement.getValue();
-            gameHistory.addLast(new HistoryItem(firstElement.getValue(), firstElement.getX(), firstElement.getY()));
+            gameHistory.addLast(new HistoryItem(firstElement.getValue(),firstElement.getX()+1, firstElement.getY()+1 ));
         } else {
 //            placeNewValue();
         }

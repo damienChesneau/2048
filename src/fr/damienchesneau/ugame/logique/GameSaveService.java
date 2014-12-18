@@ -9,7 +9,7 @@ import java.io.IOException;
  */
 public interface GameSaveService {
 
-    public GameService getGaveByFileName(final String name);
+    public GameService getGaveByFileName(final String name) throws FileNotFoundException, IOException;
 
     public void saveGame(final GameService plateau,final String fileName) throws FileNotFoundException, IOException;
 }

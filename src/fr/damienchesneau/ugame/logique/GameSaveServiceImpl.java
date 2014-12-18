@@ -1,11 +1,15 @@
 
 package fr.damienchesneau.ugame.logique;
 
+import fr.damienchesneau.ugame.logique.entitys.HistoryItem;
 import fr.damienchesneau.ugame.physique.GameSaveServiceData;
 import fr.damienchesneau.ugame.physique.PhysiqueFactory;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -16,8 +20,16 @@ class GameSaveServiceImpl implements GameSaveService{
     private final GameSaveServiceData gameSaveSrv = PhysiqueFactory.getGameSaveServiceData();
 
     @Override
-    public GameService getGaveByFileName(final String name) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public GameService getGaveByFileName(final String name) throws FileNotFoundException, IOException {
+        List<HistoryItem> history = gameSaveSrv.getGaveByFileName(name);
+        GameService game = LogiqueFactory.getGameService();
+        game.startGame(history);
+        try {
+            return game.clone();
+        } catch (CloneNotSupportedException ex) {
+            Logger.getLogger(GameSaveServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
     @Override

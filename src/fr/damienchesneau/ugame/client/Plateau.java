@@ -3,7 +3,6 @@ package fr.damienchesneau.ugame.client;
 import fr.damienchesneau.ugame.logique.GameService;
 import fr.damienchesneau.ugame.logique.LogiqueFactory;
 import java.util.Map;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -25,7 +24,11 @@ public class Plateau implements Cloneable {
         int[][] startGame = gameSrv.startGame();
         updateWindow(startGame, 0);
     }
-
+    public void startGame(GameService game){
+        gameSrv = game;
+        updateWindow(game.getPlateau(), game.getScore());
+    }
+    
     public void startGame(int[][] plateau, int score) {
         gameSrv.startGame(plateau, score);
         updateWindow(plateau, score);

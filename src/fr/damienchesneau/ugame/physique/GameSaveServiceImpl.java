@@ -51,13 +51,15 @@ class GameSaveServiceImpl implements GameSaveServiceData {
                     }
                     index++;
                 }
-                horizontal = Integer.parseInt(line.substring(index + 2, 1));
-                vertical = Integer.parseInt(line.substring(index + 1, 1));
-                number = Integer.parseInt(line.substring(index, 1));
+                String s = line.substring(index + 1, index + 2);
+                horizontal = Integer.parseInt(line.substring(index + 2, index + 3));
+                vertical = Integer.parseInt(line.substring(index + 1, index + 2));
+                number = Integer.parseInt(line.substring(index, index + 1));
                 HistoryItem item = new HistoryItem(number, horizontal, vertical, direction);
+                history.add(item);
             }
         }
-        return null;
+        return history;
     }
     /*
      214
