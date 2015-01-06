@@ -33,7 +33,7 @@ class GameSaveServiceImpl implements GameSaveServiceData {
                 int horizontal;
                 int number;
                 int index = 0;
-                if (line.startsWith("N") || line.startsWith("S") || line.startsWith("O") || line.startsWith("E")) {
+                if (line.startsWith("N") || line.startsWith("S") || line.startsWith("W") || line.startsWith("E")) {
                     String directionStt = line.substring(0, 1);
                     switch (directionStt) {
                         case "N":
@@ -42,7 +42,7 @@ class GameSaveServiceImpl implements GameSaveServiceData {
                         case "S":
                             direction = Direction.DOWN;
                             break;
-                        case "O":
+                        case "W":
                             direction = Direction.LEFT;
                             break;
                         case "E":
@@ -61,17 +61,6 @@ class GameSaveServiceImpl implements GameSaveServiceData {
         }
         return history;
     }
-    /*
-     214
-     244
-     # remarquez que le fichier n'est pas au format du sujet 
-     # n effet la direction jouée par le joeur est en premier puis la nouvelle valeur
-     N211
-     W231
-     N212
-     W234
-     N422
-     */
 
     @Override
     public void saveGame(final GameService game, final String fileName) throws FileNotFoundException, IOException {
@@ -86,6 +75,39 @@ class GameSaveServiceImpl implements GameSaveServiceData {
             }
         }
         fos.close();
+    }
+
+    @Override
+    public void procudeBinary(GameService game, String fileName) throws FileNotFoundException, IOException {
+        File file = new File(fileName);
+        FileOutputStream fos = new FileOutputStream(file);
+        List<HistoryItem> gameHistory = game.getGameHistory();
+        for (int i = 0; i < gameHistory.size(); i++) {
+            if (gameHistory.get(i).getStartItem() == 2) {
+                fos.write("0".getBytes());
+            } else if (gameHistory.get(i).getStartItem() == 4) {
+                fos.write("1".getBytes());
+            }
+        }
+        fos.close();
+    }
+
+    @Override
+    public List<HistoryItem> getBinaryFileByName(String name) throws IOException {
+        String line;
+        LinkedList<HistoryItem> history = new LinkedList<>();
+        FileInputStream fis = new FileInputStream(new File(name));
+        BufferedReader br = new BufferedReader(new InputStreamReader(fis, Charset.forName("UTF-8")));
+        while ((line = br.readLine()) != null) {
+            if (!line.startsWith("#")) {
+                for (int i = 0; i < line.length(); i++) {
+                    int val = Integer.valueOf(line.substring(i, i + 1));
+                    HistoryItem item = new HistoryItem(val == 1 ? 4 : 2, -1, -1, null);
+                    history.add(item);
+                }
+            }
+        }
+        return history;
     }
 
 }

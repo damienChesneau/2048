@@ -38,6 +38,22 @@ public class Main {
                         Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     break;
+                case "-a":
+                    plateau.startGame();
+                    UserPreference.setsSaveFile(args[1]);
+                    UserPreference.setAleatoire(true);
+                    break;
+                case "-n":
+                    UserPreference.setAleatoire(true);
+                    UserPreference.setReplayFileName(args[1]);
+                    try {
+                        GameService gaveByFileName = s.getBinaryFileByName(UserPreference.getReplayFileName());
+                        plateau.startGame(gaveByFileName);
+                    } catch (IOException ex) {
+                        JOptionPane.showMessageDialog(null, "Erreur", "Impossible de recupérer la partie.", JOptionPane.ERROR_MESSAGE);
+                        Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    break;
             }
         } else if (args.length == 1) {
             switch (args[0]) {
@@ -49,7 +65,7 @@ public class Main {
                     UserPreference.setAleatoire(true);
                     break;
             }
-        }else{
+        } else {
             plateau.startGame();
         }
         System.out.println(UserPreference.getsSaveFile());

@@ -26,7 +26,7 @@ public interface GameService extends Cloneable {
      */
     public void startGame(int[][] plateau,int score);
 
-    public GameService startGame(List<HistoryItem> history);
+    public GameService startGame(List<HistoryItem> history,boolean aleatoire);
     /**
      * GO all to left      <code>
      * Map<String, Object> ret = new HashMap<String, Object>(); <br>

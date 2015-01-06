@@ -32,7 +32,11 @@ class GameWindowListener extends WindowAdapter {
         String filename;
         if ((filename = UserPreference.getsSaveFile()) != null) {
             try {
-                savingSrv.saveGame(plateau.getGame(), filename);
+                if (UserPreference.isAleatoire()) {
+                    savingSrv.procudeBinary(plateau.getGame(), filename);
+                }else{
+                    savingSrv.saveGame(plateau.getGame(), filename);
+                }
             } catch (IOException ex) {
                 Logger.getLogger(GameWindowListener.class.getName()).log(Level.SEVERE, null, ex);
             }

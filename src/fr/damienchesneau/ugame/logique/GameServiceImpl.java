@@ -30,6 +30,7 @@ class GameServiceImpl implements GameService {
     private boolean gameOver = false;
     private boolean ingame = false;
     private boolean win = false;
+    private boolean replayAleatoire = false;
 
     public GameServiceImpl() {
         ingame = true;
@@ -44,6 +45,7 @@ class GameServiceImpl implements GameService {
 
     @Override
     public int[][] startGame() {
+        replayAleatoire = false;
         gameHistory = new LinkedList<>();
         initializePlateau();
         score = 0;
@@ -53,6 +55,7 @@ class GameServiceImpl implements GameService {
 
     @Override
     public void startGame(int[][] plateau, int score) {
+        replayAleatoire = false;
         gameHistory = new LinkedList<>();
         this.plateau = plateau;
         setScore(score);
@@ -62,7 +65,8 @@ class GameServiceImpl implements GameService {
     }
 
     @Override
-    public GameService startGame(List<HistoryItem> history) {
+    public GameService startGame(List<HistoryItem> history, boolean aleatoire) {
+        replayAleatoire = aleatoire;
         gameHistory.addAll(history);
         ingame = true;
         setScore(0);
@@ -72,9 +76,17 @@ class GameServiceImpl implements GameService {
                 plateau[i][j] = 0;
             }
         }
+        ArtificialInteligentService ia = aleatoire ? LogiqueFactory.getArtificialInteligentService() : null;
+        int i = 0;
         for (HistoryItem historyItem : history) {
+            i++;
             Direction d = null;
-            if ((d = historyItem.getDirection()) != null) {
+            if (i > 1 && aleatoire) {
+                try {
+                    d = ia.getBestDirection(this).getDirection();
+                } catch (CloneNotSupportedException ex) {
+                    Logger.getLogger(GameServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 switch (d) {
                     case LEFT:
                         goLeft(false);
@@ -89,8 +101,26 @@ class GameServiceImpl implements GameService {
                         goDown(false);
                         break;
                 }
+            } else {
+                if ((d = historyItem.getDirection()) != null) {
+                    switch (d) {
+                        case LEFT:
+                            goLeft(false);
+                            break;
+                        case RIGHT:
+                            goRight(false);
+                            break;
+                        case UP:
+                            goUp(false);
+                            break;
+                        case DOWN:
+                            goDown(false);
+                            break;
+                    }
+                }
             }
-            plateau[historyItem.getHorizontal()-1][historyItem.getVertical()-1] = historyItem.getStartItem();
+            PosAt firstElement = aleatoire ? newValue() : null;
+            plateau[aleatoire ? firstElement.getX() : historyItem.getHorizontal() - 1][aleatoire ? firstElement.getY() : historyItem.getVertical() - 1] = historyItem.getStartItem();
         }
         return this;
     }
@@ -171,6 +201,7 @@ class GameServiceImpl implements GameService {
         }
     }
 
+    @Override
     public Map<String, Object> goRight() {
         return goRight(true);
     }
@@ -336,7 +367,7 @@ class GameServiceImpl implements GameService {
 
     private PosAt newValue() {
         long time = new Date().getTime();
-        Random r = new Random(time);
+        Random r = new Random(replayAleatoire ? 14071789 : time);
         int valeur = 0 + r.nextInt(9 - 0);
         int isTowOrFour = 2;
         if (valeur == 1) {
@@ -347,7 +378,7 @@ class GameServiceImpl implements GameService {
             gameOver();
             return null;
         }
-        Random r2 = new Random(time);
+        Random r2 = new Random(replayAleatoire ? 14071789 : time);
         int index = 0 + r.nextInt(ids.size() - 0);
         int iValue = getIById(ids.get(index));
         int jValue = getJById(ids.get(index));
@@ -396,7 +427,7 @@ class GameServiceImpl implements GameService {
         PosAt firstElement = newValue();
         if (firstElement != null && plateau[firstElement.getX()][firstElement.getY()] == 0) {
             plateau[firstElement.getX()][firstElement.getY()] = firstElement.getValue();
-            gameHistory.addLast(new HistoryItem(firstElement.getValue(),firstElement.getX()+1, firstElement.getY()+1 ));
+            gameHistory.addLast(new HistoryItem(firstElement.getValue(), firstElement.getX() + 1, firstElement.getY() + 1));
         } else {
 //            placeNewValue();
         }

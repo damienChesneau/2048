@@ -7,12 +7,9 @@ import fr.damienchesneau.ugame.logique.LogiqueFactory;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.io.IOException;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JFrame;
 
 /**
  *
@@ -65,16 +62,13 @@ class Commands extends WindowAdapter implements KeyListener {
     }
 
     public final void solveGame() {
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                ArtificialInteligentService df = LogiqueFactory.getArtificialInteligentService();
-                try {
-                    Map<String, Object> solveGame = df.solveGame(plateau.getGame().clone());
-                    plateau.startGame((int[][]) solveGame.get(GameService.KEY_PLATEAU), (int) solveGame.get(GameService.KEY_SCORE));
-                } catch (CloneNotSupportedException ex) {
-                    Logger.getLogger(Plateau.class.getName()).log(Level.SEVERE, null, ex);
-                }
+        Thread t = new Thread(() -> {
+            ArtificialInteligentService df = LogiqueFactory.getArtificialInteligentService();
+            try {
+                Map<String, Object> solveGame = df.solveGame(plateau.getGame().clone());
+                plateau.startGame((int[][]) solveGame.get(GameService.KEY_PLATEAU), (int) solveGame.get(GameService.KEY_SCORE));
+            } catch (CloneNotSupportedException ex) {
+                Logger.getLogger(Plateau.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
         t.start();

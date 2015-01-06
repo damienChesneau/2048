@@ -1,5 +1,6 @@
 package fr.damienchesneau.ugame.logique;
 
+import fr.damienchesneau.ugame.logique.entitys.DirectionChoose;
 import java.util.Map;
 
 /**
@@ -10,4 +11,5 @@ public interface ArtificialInteligentService {
 
     public Map<String, Object> solveGame(GameService game) throws CloneNotSupportedException;
 
+    public DirectionChoose getBestDirection(GameService p) throws CloneNotSupportedException;
 }

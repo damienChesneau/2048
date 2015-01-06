@@ -1,4 +1,3 @@
-
 package fr.damienchesneau.ugame.logique;
 
 import fr.damienchesneau.ugame.logique.entitys.HistoryItem;
@@ -15,7 +14,7 @@ import java.util.logging.Logger;
  *
  * @author Damien Chesneau <contact@damienchesneau.fr>
  */
-class GameSaveServiceImpl implements GameSaveService{
+class GameSaveServiceImpl implements GameSaveService {
 
     private final GameSaveServiceData gameSaveSrv = PhysiqueFactory.getGameSaveServiceData();
 
@@ -23,7 +22,7 @@ class GameSaveServiceImpl implements GameSaveService{
     public GameService getGaveByFileName(final String name) throws FileNotFoundException, IOException {
         List<HistoryItem> history = gameSaveSrv.getGaveByFileName(name);
         GameService game = LogiqueFactory.getGameService();
-        game.startGame(history);
+        game.startGame(history, false);
         try {
             return game.clone();
         } catch (CloneNotSupportedException ex) {
@@ -37,6 +36,26 @@ class GameSaveServiceImpl implements GameSaveService{
         Objects.requireNonNull(plateau, "Le plateau est null vous ne pouvez pas effectuer cet opétation.");
         Objects.requireNonNull(fileName, "Vous n'avez pas fourni de nom de fichier.");
         this.gameSaveSrv.saveGame(plateau, fileName);
+    }
+
+    @Override
+    public void procudeBinary(GameService plateau, String fileName) throws FileNotFoundException, IOException {
+        Objects.requireNonNull(plateau, "Le plateau est null vous ne pouvez pas effectuer cet opétation.");
+        Objects.requireNonNull(fileName, "Vous n'avez pas fourni de nom de fichier.");
+        this.gameSaveSrv.procudeBinary(plateau, fileName);
+    }
+
+    @Override
+    public GameService getBinaryFileByName(String name) throws IOException {
+        List<HistoryItem> history = gameSaveSrv.getBinaryFileByName(name);
+        GameService game = LogiqueFactory.getGameService();
+        game.startGame(history, true);
+        try {
+            return game.clone();
+        } catch (CloneNotSupportedException ex) {
+            Logger.getLogger(GameSaveServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
 }

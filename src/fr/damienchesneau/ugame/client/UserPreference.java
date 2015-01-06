@@ -21,9 +21,6 @@ public class UserPreference {
     }
 
     public static String getsSaveFile() {
-        if(aleatoire){
-            return fileAleatoire;
-        }
         return sSaveFileName;
     }
 
@@ -32,9 +29,6 @@ public class UserPreference {
     }
 
     public static String getReplayFileName() {
-        if(aleatoire){
-            return fileAleatoire;
-        }
         return replayFileName;
     }
 
@@ -42,7 +36,7 @@ public class UserPreference {
         replayFileName = aReplayFileName;
     }
 
-    private static boolean isAleatoire() {
+    public static boolean isAleatoire() {
         return aleatoire;
     }
 

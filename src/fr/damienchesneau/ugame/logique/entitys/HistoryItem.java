@@ -10,7 +10,7 @@ public class HistoryItem {
     private final int horizontal;
     private final int vertical;
     private Direction direction;
-
+    
     public HistoryItem(int startItem, int horizontal, int vertical) {
         this.startItem = startItem;
         this.horizontal = horizontal;
@@ -38,7 +38,7 @@ public class HistoryItem {
                     dir = "N";
                     break;
                 case LEFT:
-                    dir = "O";
+                    dir = "W";
                     break;
                 case RIGHT:
                     dir = "E";
