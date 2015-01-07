@@ -14,7 +14,7 @@ import javax.swing.SwingConstants;
 
 /**
  * IHM utilisateur.
- * @author Damien Chesneau <contact@damienchesneau.fr>
+ * @author Damien Chesneau <a href="mailto:contact@damienchesneau.fr">contact@damienchesneau.fr</a>
  */
 class Window extends javax.swing.JFrame {
 

@@ -5,7 +5,7 @@ import fr.damienchesneau.ugame.logique.GameService;
 
 /**
  * Classe entité permettant de referencer les choix possibles et leurs valeur.
- * @author Damien Chesneau <contact@damienchesneau.fr>
+ * @author Damien Chesneau <a href="mailto:contact@damienchesneau.fr">contact@damienchesneau.fr</a>
  */
 public class DirectionChoose {
     /**

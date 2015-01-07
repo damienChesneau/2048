@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * Service de gestion des fichiers.
- * @author Damien Chesneau <contact@damienchesneau.fr>
+ * @author Damien Chesneau <a href="mailto:contact@damienchesneau.fr">contact@damienchesneau.fr</a>
  */
 public interface GameSaveServiceData {
 

@@ -5,7 +5,7 @@ import java.io.IOException;
 
 /**
  * Service de récupération ou sauvegarde d'une partie.
- * @author Damien Chesneau <contact@damienchesneau.fr>
+ * @author Damien Chesneau <a href="mailto:contact@damienchesneau.fr">contact@damienchesneau.fr</a>
  */
 public interface GameSaveService {
 

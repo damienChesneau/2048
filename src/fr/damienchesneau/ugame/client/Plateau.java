@@ -6,7 +6,8 @@ import java.util.Map;
 
 /**
  * Ici nous fesons l'interface entre le code metier et l'IHM.
- * @author Damien Chesneau <contact@damienchesneau.fr>
+ * @author Damien Chesneau <a href="mailto:contact@damienchesneau.fr">contact@damienchesneau.fr</a>
+ * 
  */
 public class Plateau implements Cloneable {
 

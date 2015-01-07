@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 
 /**
  * Permet de récuper des polices spécifiques.
- * @author Damien Chesneau <contact@damienchesneau.fr>
+ * @author Damien Chesneau <a href="mailto:contact@damienchesneau.fr">contact@damienchesneau.fr</a>
  */
 public class FontGame {
 

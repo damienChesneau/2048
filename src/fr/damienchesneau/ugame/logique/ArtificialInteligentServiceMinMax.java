@@ -9,7 +9,7 @@ import java.util.NoSuchElementException;
 
 /**
  * Implémentation de l'algorithme permettant de résoudre le jeux.
- * @author Damien Chesneau <contact@damienchesneau.fr>
+ * @author Damien Chesneau <a href="mailto:contact@damienchesneau.fr">contact@damienchesneau.fr</a>
  */
 class ArtificialInteligentServiceMinMax implements ArtificialInteligentService {
 

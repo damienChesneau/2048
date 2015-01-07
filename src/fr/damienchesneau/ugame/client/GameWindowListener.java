@@ -12,7 +12,7 @@ import javax.swing.JFrame;
 
 /**
  * Cette classe a été créer pour pouvoir intercepter l'evenement de fermeture de la fenetre.
- * @author Damien Chesneau <contact@damienchesneau.fr>
+ * @author Damien Chesneau <a href="mailto:contact@damienchesneau.fr">contact@damienchesneau.fr</a>
  */
 class GameWindowListener extends WindowAdapter {
 
