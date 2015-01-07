@@ -22,59 +22,59 @@ public interface GameService extends Cloneable {
     /**
      * initialise all for start a game.
      *
-     * @param plateauHeight
+     * @param plateauHeight nombre de cases
      * @return int[][] the plateau
      */
     public int[][] startGame(int plateauHeight);
     /**
      * Compared to the upper fonction I return void because we already know the matrice
      * @param plateau a int matrice
-     * @param score
+     * @param score score du plateau passé en paramètre
      */
     public void startGame(int[][] plateau,int score);
 
     public GameService startGame(List<HistoryItem> history,boolean aleatoire);
     /**
      * GO all to left      <code>
-     * Map<String, Object> ret = new HashMap<String, Object>(); <br>
+     * Map (String, Object) ret = new HashMap (String, Object) (); <br>
      * ret.put(GameService.KEY_SCORE,score); <br>
      * ret.put(GameService.KEY_PLATEAU, getPlateau());<br>
      * </code>
      *
-     * @return Map<String, Object>
+     * @return Map(String, Object)
      */
     public Map<String, Object> goLeft();
 
     /**
      * go all to right      <code>
-     * Map<String, Object> ret = new HashMap<String, Object>(); <br>
+     * Map String, Objec ret = new HashMap String, Object(); <br>
      * ret.put(GameService.KEY_SCORE,score); <br>
      * ret.put(GameService.KEY_PLATEAU, getPlateau());<br>
      * </code>
      *
-     * @return Map<String, Object>
+     * @return MapString, Object
      */
     public Map<String, Object> goRight();
 
     /**
      * go allll to down      <code>
-     * Map<String, Object> ret = new HashMap<String, Object>(); <br>
+     * Map String, Object ret = new HashMapString, Object(); <br>
      * ret.put(GameService.KEY_SCORE,score); <br>
      * ret.put(GameService.KEY_PLATEAU, getPlateau());<br>
      * </code>
      *
-     * @return Map<String, Object>
+     * @return Map String, Object
      */
     public Map<String, Object> goDown();
 
     /**
      * go all to up      <code>
-     * Map<String, Object> ret = new HashMap<String, Object>(); <br>
+     * Map String, Object ret = new HashMap String, Object(); <br>
      * ret.put(GameService.KEY_SCORE,score); <br>
      * ret.put(GameService.KEY_PLATEAU, getPlateau());<br>
      * </code>
      *
-     * @return Map<String, Object>
+     * @return Map String, Object 
      */
     public Map<String, Object> goUp();
 

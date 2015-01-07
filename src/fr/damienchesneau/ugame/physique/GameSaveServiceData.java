@@ -14,8 +14,9 @@ public interface GameSaveServiceData {
 
     /**
      *
-     * @param name
-     * @return
+     * @param name path du fichier
+     * @return history dans le fichier
+     * @throws java.io.IOException si l'ouverture du fichier pose problème.
      */
     public List<HistoryItem> getGaveByFileName(String name) throws IOException;
 

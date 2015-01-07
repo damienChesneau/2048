@@ -61,7 +61,7 @@ public class FontGame {
     }
     /**
      * 
-     * @param fga
+     * @param fga polide disponible
      * @return String name of font
      */
     public String getFont(FontGameAvalable fga) {
