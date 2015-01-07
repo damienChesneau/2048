@@ -3,6 +3,7 @@ package fr.damienchesneau.ugame.client;
 import fr.damienchesneau.ugame.client.font.FontGame;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.HeadlessException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
@@ -36,6 +37,11 @@ class Window extends javax.swing.JFrame {
         setVisible(true);
     }
 
+    public Window(Commands commands,int newHeight) throws HeadlessException {
+        this(commands);
+        this.setSize(600, 600);
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

@@ -2,6 +2,7 @@ package fr.damienchesneau.ugame.logique;
 
 import fr.damienchesneau.ugame.logique.entitys.Direction;
 import fr.damienchesneau.ugame.logique.entitys.HistoryItem;
+import fr.damienchesneau.ugame.logique.entitys.UserPreference;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -20,8 +21,8 @@ import java.util.logging.Logger;
  */
 class GameServiceImpl implements GameService {
 
-    private final int PLATEAU_HEIGHT = 4;
-    private final int PLATEAU_WIDTH = 4;
+    private int PLATEAU_HEIGHT = 4;
+    private int PLATEAU_WIDTH = 4;
 
     private LinkedList<HistoryItem> gameHistory = new LinkedList<>();
     private int[][] plateau; // i colones J lignes
@@ -43,6 +44,11 @@ class GameServiceImpl implements GameService {
         this.score = score;
     }
 
+    public GameServiceImpl(int[][] plateau, int score, List<HistoryItem> history) {
+        this(plateau, score);
+        this.gameHistory.addAll(Objects.requireNonNull(history));
+    }
+
     @Override
     public int[][] startGame() {
         replayAleatoire = false;
@@ -51,6 +57,13 @@ class GameServiceImpl implements GameService {
         score = 0;
         ingame = true;
         return plateau;
+    }
+
+    @Override
+    public int[][] startGame(int plateauHeight) {
+        PLATEAU_HEIGHT = plateauHeight;
+        PLATEAU_WIDTH = plateauHeight;
+        return this.startGame();
     }
 
     @Override
@@ -366,7 +379,12 @@ class GameServiceImpl implements GameService {
     }
 
     private PosAt newValue() {
-        long time = new Date().getTime();
+        long time = 0;
+        if(UserPreference.getPreferendSeedValue()!=0){
+            time = new Date().getTime();
+        }else{
+            time = new Date().getTime();
+        }
         Random r = new Random(replayAleatoire ? 14071789 : time);
         int valeur = 0 + r.nextInt(9 - 0);
         int isTowOrFour = 2;
@@ -515,7 +533,7 @@ class GameServiceImpl implements GameService {
 
     @Override
     public GameService clone() throws CloneNotSupportedException {
-        return new GameServiceImpl(getPlateau(), new Integer(score));
+        return new GameServiceImpl(getPlateau(), new Integer(score), this.gameHistory);
     }
 
     public boolean isIngame() {

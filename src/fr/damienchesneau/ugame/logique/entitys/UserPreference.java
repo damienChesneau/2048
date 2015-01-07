@@ -1,4 +1,4 @@
-package fr.damienchesneau.ugame.client;
+package fr.damienchesneau.ugame.logique.entitys;
 
 /**
  *
@@ -12,6 +12,17 @@ public class UserPreference {
     private static boolean aleatoire = false;
     private static String fileAleatoire = "file_aleatoire.sv";
 
+    private static long preferendSeedValue = 0;
+
+    public static void setPreferendSeedValue(long preferendSeedValue) {
+        UserPreference.preferendSeedValue = preferendSeedValue;
+    }
+
+    public static long getPreferendSeedValue() {
+        return preferendSeedValue;
+    }
+
+    
     public static boolean isSSaveFile() {
         return sSaveFileName == null;
     }

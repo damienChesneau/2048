@@ -1,5 +1,6 @@
 package fr.damienchesneau.ugame.client;
 
+import fr.damienchesneau.ugame.logique.entitys.UserPreference;
 import fr.damienchesneau.ugame.logique.GameSaveService;
 import fr.damienchesneau.ugame.logique.LogiqueFactory;
 import java.awt.event.WindowAdapter;

@@ -20,15 +20,27 @@ public class Plateau implements Cloneable {
         updateWindow(gameSrv.startGame(), 0);
     }
 
+    public Plateau(int heightPlateau) {
+        gameSrv = LogiqueFactory.getGameService();
+        if (heightPlateau == 5) {
+            ihm = new Window(new Commands(this), heightPlateau);
+        } else {
+            ihm = new Window(new Commands(this));
+        }
+        initaliseJFrameWindow();
+        updateWindow(gameSrv.startGame(), 0);
+    }
+
     public void startGame() {
         int[][] startGame = gameSrv.startGame();
         updateWindow(startGame, 0);
     }
-    public void startGame(GameService game){
+
+    public void startGame(GameService game) {
         gameSrv = game;
         updateWindow(game.getPlateau(), game.getScore());
     }
-    
+
     public void startGame(int[][] plateau, int score) {
         gameSrv.startGame(plateau, score);
         updateWindow(plateau, score);

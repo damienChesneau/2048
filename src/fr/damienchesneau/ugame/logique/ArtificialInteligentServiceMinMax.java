@@ -63,7 +63,7 @@ class ArtificialInteligentServiceMinMax implements ArtificialInteligentService {
 
                     if (bestDirection.getGame().isWin()) {
                         break;
-                    } 
+                    }
                 } else {
                     break;
                 }
@@ -96,6 +96,7 @@ class ArtificialInteligentServiceMinMax implements ArtificialInteligentService {
         }
     }
 
+    @Override
     public DirectionChoose getBestDirection(GameService p) throws CloneNotSupportedException {
         List<DirectionChoose> allDirectionsTested = testAllDirections(p);
         int size = allDirectionsTested.size();

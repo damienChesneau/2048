@@ -20,6 +20,13 @@ public interface GameService extends Cloneable {
     public int[][] startGame();
 
     /**
+     * initialise all for start a game.
+     *
+     * @param plateauHeight
+     * @return int[][] the plateau
+     */
+    public int[][] startGame(int plateauHeight);
+    /**
      * Compared to the upper fonction I return void because we already know the matrice
      * @param plateau a int matrice
      * @param score
