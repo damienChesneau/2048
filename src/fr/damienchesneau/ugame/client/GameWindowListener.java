@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 import javax.swing.JFrame;
 
 /**
- *
+ * Cette classe a été créer pour pouvoir intercepter l'evenement de fermeture de la fenetre.
  * @author Damien Chesneau <contact@damienchesneau.fr>
  */
 class GameWindowListener extends WindowAdapter {

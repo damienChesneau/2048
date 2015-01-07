@@ -1,7 +1,7 @@
 package fr.damienchesneau.ugame.logique.entitys;
 
 /**
- *
+ * Cette classe entité permet de pouvoir encapsuler l'histoire du jeux.
  * @author Damien Chesneau <contact@damienchesneau.fr>
  */
 public class HistoryItem {

@@ -5,7 +5,7 @@ import fr.damienchesneau.ugame.logique.LogiqueFactory;
 import java.util.Map;
 
 /**
- *
+ * Ici nous fesons l'interface entre le code metier et l'IHM.
  * @author Damien Chesneau <contact@damienchesneau.fr>
  */
 public class Plateau implements Cloneable {

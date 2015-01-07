@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 /**
- *
+ * IHM utilisateur.
  * @author Damien Chesneau <contact@damienchesneau.fr>
  */
 class Window extends javax.swing.JFrame {

@@ -12,7 +12,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ * Cette classe permet de gerer les commandes utilisateurs comme les touches pour jouer et les actions apres un clique <br>
+ * Sur un bouton.
  * @author Damien Chesneau <contact@damienchesneau.fr>
  */
 class Commands extends WindowAdapter implements KeyListener {

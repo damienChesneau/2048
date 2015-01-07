@@ -4,7 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 /**
- *
+ * Service de récupération ou sauvegarde d'une partie.
  * @author Damien Chesneau <contact@damienchesneau.fr>
  */
 public interface GameSaveService {

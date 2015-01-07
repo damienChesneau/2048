@@ -11,7 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ * Permet de récuper des polices spécifiques.
  * @author Damien Chesneau <contact@damienchesneau.fr>
  */
 public class FontGame {

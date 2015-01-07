@@ -1,7 +1,7 @@
 package fr.damienchesneau.ugame.logique.entitys;
 
 /**
- *
+ * Les préférences utilisateurs serons envoyé ici.
  * @author Damien Chesneau <contact@damienchesneau.fr>
  */
 public class UserPreference {

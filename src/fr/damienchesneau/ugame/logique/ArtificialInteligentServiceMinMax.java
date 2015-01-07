@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 
 /**
- *
+ * Implémentation de l'algorithme permettant de résoudre le jeux.
  * @author Damien Chesneau <contact@damienchesneau.fr>
  */
 class ArtificialInteligentServiceMinMax implements ArtificialInteligentService {

@@ -4,7 +4,7 @@ package fr.damienchesneau.ugame.logique.entitys;
 import fr.damienchesneau.ugame.logique.GameService;
 
 /**
- *
+ * Classe entité permettant de referencer les choix possibles et leurs valeur.
  * @author Damien Chesneau <contact@damienchesneau.fr>
  */
 public class DirectionChoose {

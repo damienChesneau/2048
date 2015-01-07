@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- *
+ * Service du jeu.
  * @author Damien Chesneau <contact@damienchesneau.fr>
  */
 public interface GameService extends Cloneable {

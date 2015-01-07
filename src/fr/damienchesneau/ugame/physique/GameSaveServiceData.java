@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- *
+ * Service de gestion des fichiers.
  * @author Damien Chesneau <contact@damienchesneau.fr>
  */
 public interface GameSaveServiceData {
