@@ -4,17 +4,22 @@ import fr.damienchesneau.ugame.logique.ArtificialInteligentService;
 import fr.damienchesneau.ugame.logique.GameSaveService;
 import fr.damienchesneau.ugame.logique.GameService;
 import fr.damienchesneau.ugame.logique.LogiqueFactory;
+import java.awt.TrayIcon;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
- * Cette classe permet de gerer les commandes utilisateurs comme les touches pour jouer et les actions apres un clique <br>
+ * Cette classe permet de gerer les commandes utilisateurs comme les touches
+ * pour jouer et les actions apres un clique <br>
  * Sur un bouton.
- * @author Damien Chesneau <a href="mailto:contact@damienchesneau.fr">contact@damienchesneau.fr</a>
+ *
+ * @author Damien Chesneau
+ * <a href="mailto:contact@damienchesneau.fr">contact@damienchesneau.fr</a>
  */
 class Commands extends WindowAdapter implements KeyListener {
 
@@ -63,16 +68,14 @@ class Commands extends WindowAdapter implements KeyListener {
     }
 
     public final void solveGame() {
-        Thread t = new Thread(() -> {
-            ArtificialInteligentService df = LogiqueFactory.getArtificialInteligentService();
-            try {
-                Map<String, Object> solveGame = df.solveGame(plateau.getGame().clone());
-                plateau.startGame((int[][]) solveGame.get(GameService.KEY_PLATEAU), (int) solveGame.get(GameService.KEY_SCORE));
-            } catch (CloneNotSupportedException ex) {
-                Logger.getLogger(Plateau.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        });
-        t.start();
+        ArtificialInteligentService df = LogiqueFactory.getArtificialInteligentService();
+        try {
+            Map<String, Object> solveGame = df.solveGame(plateau.getGame().clone());
+            plateau.startGame((int[][]) solveGame.get(GameService.KEY_PLATEAU), (int) solveGame.get(GameService.KEY_SCORE));
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error unable to launch the solver", "Error", JOptionPane.ERROR_MESSAGE);
+            Logger.getLogger(Plateau.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public final void retry() {

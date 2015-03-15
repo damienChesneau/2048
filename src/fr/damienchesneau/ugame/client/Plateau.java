@@ -73,7 +73,6 @@ public class Plateau implements Cloneable {
         ihm.printPlateau(plateau);
         ihm.setScore(score);
         if (nb >= 110) {
-            System.out.println("edsqw");
         }
         if (gameSrv.isGameOver()) {
             ihm.infoGameOver();

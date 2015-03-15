@@ -3,7 +3,10 @@ package fr.damienchesneau.ugame.client;
 import fr.damienchesneau.ugame.client.font.FontGame;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.HeadlessException;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
@@ -93,7 +96,7 @@ class Window extends javax.swing.JFrame {
 
         jButtonRetry.setBackground(new java.awt.Color(143, 122, 102));
         jButtonRetry.setForeground(new java.awt.Color(249, 246, 242));
-        jButtonRetry.setText("Retry");
+        jButtonRetry.setText("Restart");
         jButtonRetry.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonRetryActionPerformed(evt);
@@ -891,10 +894,15 @@ class Window extends javax.swing.JFrame {
             return fontColor;
         }
     }
-    private static final String fontGameName;
+    private static String fontGameName = null;
 
     static {
-        fontGameName = new FontGame().getFont(FontGame.FontGameAvalable.CLEAR_SANS_BOLD);
+        try {
+            fontGameName = new FontGame().getFont(FontGame.FontGameAvalable.CLEAR_SANS_BOLD);
+        } catch (FontFormatException | IOException | URISyntaxException ex) {
+            System.err.println("Unable to pull policies.");
+            Logger.getLogger(Window.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     private final PanelConfig standard = new PanelConfig(null, new Color(238, 228, 218, 35), new Color(238, 228, 218, 35));
     private final PanelConfig level1Color = new PanelConfig(new Font(fontGameName, 107, 55), new Color(238, 228, 218, 255), new Color(119, 110, 101, 255));

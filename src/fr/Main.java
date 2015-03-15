@@ -21,7 +21,7 @@ public class Main {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         GameSaveService s = LogiqueFactory.getGameSaveService();
         Plateau plateau;
         if (args.length >= 3) {

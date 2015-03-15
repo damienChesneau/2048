@@ -99,6 +99,8 @@ class GameServiceImpl implements GameService {
                     d = ia.getBestDirection(this).getDirection();
                 } catch (CloneNotSupportedException ex) {
                     Logger.getLogger(GameServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (Exception ex) {
+                    Logger.getLogger(GameServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 switch (d) {
                     case LEFT:

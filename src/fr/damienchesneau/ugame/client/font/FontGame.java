@@ -12,17 +12,20 @@ import java.util.logging.Logger;
 
 /**
  * Permet de récuper des polices spécifiques.
- * @author Damien Chesneau <a href="mailto:contact@damienchesneau.fr">contact@damienchesneau.fr</a>
+ *
+ * @author Damien Chesneau
+ * <a href="mailto:contact@damienchesneau.fr">contact@damienchesneau.fr</a>
  */
 public class FontGame {
 
-    public static enum FontGameAvalable {
-        CLEAR_SANS_BOLD,CLEAR_SANS_BOLD_ITALIC,CLEAR_SANS_ITALIC,CLEAR_SANS_LIGHT,CLEAR_SANS_MEDIUM,CLEAR_SANS_MEDIUM_ITALIC,CLEAR_SANS_REGULAR,CLEAR_SANS_THIN
+    public enum FontGameAvalable {
+
+        CLEAR_SANS_BOLD, CLEAR_SANS_BOLD_ITALIC, CLEAR_SANS_ITALIC, CLEAR_SANS_LIGHT, CLEAR_SANS_MEDIUM, CLEAR_SANS_MEDIUM_ITALIC, CLEAR_SANS_REGULAR, CLEAR_SANS_THIN
     }
 
-    private File getFile(FontGameAvalable fga) {
-        String name=null;
-        switch(fga){
+    private File getFile(FontGameAvalable fga) throws URISyntaxException {
+        String name = null;
+        switch (fga) {
             case CLEAR_SANS_BOLD:
                 name = "ClearSans-Bold.ttf";
                 break;
@@ -52,29 +55,21 @@ public class FontGame {
                 break;
         }
         URL resource = getClass().getResource(name);
-        try {
-            return new File(resource.toURI());
-        } catch (URISyntaxException ex) {
-            Logger.getLogger(FontGame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
+        return new File(resource.toURI());
     }
+
     /**
-     * 
+     *
      * @param fga polide disponible
      * @return String name of font
+     * @throws java.awt.FontFormatException
+     * @throws java.io.IOException
+     * @throws java.net.URISyntaxException
      */
-    public String getFont(FontGameAvalable fga) {
-        Font font = null;
+    public String getFont(FontGameAvalable fga) throws FontFormatException, IOException, URISyntaxException {
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        try {
-            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, getFile(fga)));
-            font = Font.createFont(Font.TRUETYPE_FONT, getFile(fga));
-        } catch (FontFormatException ex) {
-            Logger.getLogger(FontGame.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(FontGame.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, getFile(fga)));
+        Font font = Font.createFont(Font.TRUETYPE_FONT, getFile(fga));
         return font.getFontName();
     }
 }

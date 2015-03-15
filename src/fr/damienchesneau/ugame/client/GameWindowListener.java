@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  * Cette classe a été créer pour pouvoir intercepter l'evenement de fermeture de la fenetre.
@@ -29,7 +30,6 @@ class GameWindowListener extends WindowAdapter {
     @Override
     public void windowClosing(WindowEvent e) {
         super.windowClosing(e);
-        System.out.println("out");
         String filename;
         if ((filename = UserPreference.getsSaveFile()) != null) {
             try {
@@ -39,6 +39,7 @@ class GameWindowListener extends WindowAdapter {
                     savingSrv.saveGame(plateau.getGame(), filename);
                 }
             } catch (IOException ex) {
+                JOptionPane.showMessageDialog(null, "Error unable to save the game", "Error", JOptionPane.ERROR_MESSAGE);
                 Logger.getLogger(GameWindowListener.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
