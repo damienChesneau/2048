@@ -21,7 +21,7 @@ class GameSaveServiceImpl implements GameSaveService {
     @Override
     public GameService getGaveByFileName(final String name) throws FileNotFoundException, IOException {
         List<HistoryItem> history = gameSaveSrv.getGaveByFileName(name);
-        GameService game = LogiqueFactory.getGameService();
+        GameService game = LogicFactory.getGameService();
         game.startGame(history, false);
         try {
             return game.clone();
@@ -48,7 +48,7 @@ class GameSaveServiceImpl implements GameSaveService {
     @Override
     public GameService getBinaryFileByName(String name) throws IOException {
         List<HistoryItem> history = gameSaveSrv.getBinaryFileByName(name);
-        GameService game = LogiqueFactory.getGameService();
+        GameService game = LogicFactory.getGameService();
         game.startGame(history, true);
         try {
             return game.clone();

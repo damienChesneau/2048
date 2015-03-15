@@ -2,7 +2,7 @@ package fr.damienchesneau.ugame.client;
 
 import fr.damienchesneau.ugame.logique.entitys.UserPreference;
 import fr.damienchesneau.ugame.logique.GameSaveService;
-import fr.damienchesneau.ugame.logique.LogiqueFactory;
+import fr.damienchesneau.ugame.logique.LogicFactory;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
@@ -23,7 +23,7 @@ class GameWindowListener extends WindowAdapter {
     GameWindowListener(JFrame frame, Plateau plateau) {
         this.ihm = frame;
         this.plateau = plateau;
-        this.savingSrv = LogiqueFactory.getGameSaveService();
+        this.savingSrv = LogicFactory.getGameSaveService();
     }
 
     @Override

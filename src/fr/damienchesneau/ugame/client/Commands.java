@@ -3,7 +3,7 @@ package fr.damienchesneau.ugame.client;
 import fr.damienchesneau.ugame.logique.ArtificialInteligentService;
 import fr.damienchesneau.ugame.logique.GameSaveService;
 import fr.damienchesneau.ugame.logique.GameService;
-import fr.damienchesneau.ugame.logique.LogiqueFactory;
+import fr.damienchesneau.ugame.logique.LogicFactory;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
@@ -23,7 +23,7 @@ class Commands extends WindowAdapter implements KeyListener {
 
     public Commands(Plateau plateau) {
         this.plateau = plateau;
-        this.savingSrv = LogiqueFactory.getGameSaveService();
+        this.savingSrv = LogicFactory.getGameSaveService();
     }
 
     @Override
@@ -64,7 +64,7 @@ class Commands extends WindowAdapter implements KeyListener {
 
     public final void solveGame() {
         Thread t = new Thread(() -> {
-            ArtificialInteligentService df = LogiqueFactory.getArtificialInteligentService();
+            ArtificialInteligentService df = LogicFactory.getArtificialInteligentService();
             try {
                 Map<String, Object> solveGame = df.solveGame(plateau.getGame().clone());
                 plateau.startGame((int[][]) solveGame.get(GameService.KEY_PLATEAU), (int) solveGame.get(GameService.KEY_SCORE));

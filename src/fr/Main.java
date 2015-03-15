@@ -5,7 +5,7 @@ import fr.damienchesneau.ugame.logique.entitys.UserPreference;
 import fr.damienchesneau.ugame.logique.ArtificialInteligentService;
 import fr.damienchesneau.ugame.logique.GameSaveService;
 import fr.damienchesneau.ugame.logique.GameService;
-import fr.damienchesneau.ugame.logique.LogiqueFactory;
+import fr.damienchesneau.ugame.logique.LogicFactory;
 import java.io.IOException;
 import java.util.Map;
 import java.util.logging.Level;
@@ -22,7 +22,7 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        GameSaveService s = LogiqueFactory.getGameSaveService();
+        GameSaveService s = LogicFactory.getGameSaveService();
         Plateau plateau;
         if (args.length >= 3) {
             plateau = new Plateau();
@@ -56,7 +56,7 @@ public class Main {
                 /*<!--  -M c'est pour l'application de l'algorithme MinMax  -->
                  <!--  -g c'est la valeur de seed  -->*/
                 UserPreference.setPreferendSeedValue(Integer.valueOf(args[2]));
-                ArtificialInteligentService ia = LogiqueFactory.getArtificialInteligentService();
+                ArtificialInteligentService ia = LogicFactory.getArtificialInteligentService();
                 try {
                     Map<String, Object> solveGame = ia.solveGame(plateau.getGame().clone());
                     plateau.startGame((int[][]) solveGame.get(GameService.KEY_PLATEAU), (int) solveGame.get(GameService.KEY_SCORE));

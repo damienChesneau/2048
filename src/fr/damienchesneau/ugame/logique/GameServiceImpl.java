@@ -89,7 +89,7 @@ class GameServiceImpl implements GameService {
                 plateau[i][j] = 0;
             }
         }
-        ArtificialInteligentService ia = aleatoire ? LogiqueFactory.getArtificialInteligentService() : null;
+        ArtificialInteligentService ia = aleatoire ? LogicFactory.getArtificialInteligentService() : null;
         int i = 0;
         for (HistoryItem historyItem : history) {
             i++;

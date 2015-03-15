@@ -9,7 +9,9 @@ package fr.damienchesneau.ugame.logique;
  * @author Damien Chesneau
  * <a href="mailto:contact@damienchesneau.fr">contact@damienchesneau.fr</a>
  */
-public class LogiqueFactory {
+public class LogicFactory {
+
+    private LogicFactory() {}
 
     public static GameSaveService getGameSaveService() {
         return new GameSaveServiceImpl();

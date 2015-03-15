@@ -1,7 +1,7 @@
 package fr.damienchesneau.ugame.client;
 
 import fr.damienchesneau.ugame.logique.GameService;
-import fr.damienchesneau.ugame.logique.LogiqueFactory;
+import fr.damienchesneau.ugame.logique.LogicFactory;
 import java.util.Map;
 
 /**
@@ -15,14 +15,14 @@ public class Plateau implements Cloneable {
     private GameService gameSrv = null;
 
     public Plateau() {
-        gameSrv = LogiqueFactory.getGameService();
+        gameSrv = LogicFactory.getGameService();
         ihm = new Window(new Commands(this));
         initaliseJFrameWindow();
         updateWindow(gameSrv.startGame(), 0);
     }
 
     public Plateau(int heightPlateau) {
-        gameSrv = LogiqueFactory.getGameService();
+        gameSrv = LogicFactory.getGameService();
         if (heightPlateau == 5) {
             ihm = new Window(new Commands(this), heightPlateau);
         } else {
