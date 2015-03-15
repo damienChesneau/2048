@@ -9,14 +9,10 @@ package fr.damienchesneau.ugame.physique;
  * @author Damien Chesneau <a href="mailto:contact@damienchesneau.fr">contact@damienchesneau.fr</a>
  */
 public class PhysiqueFactory {
+    
     private PhysiqueFactory(){}
-    
-    private static GameSaveServiceData gameSaveSrv = null;
-    
+       
     public static GameSaveServiceData getGameSaveServiceData(){
-        if(gameSaveSrv == null){
-            gameSaveSrv = new GameSaveServiceImpl();
-        }
-        return gameSaveSrv;
+        return  new GameSaveServiceImpl();
     }
 }

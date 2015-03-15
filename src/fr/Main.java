@@ -23,7 +23,7 @@ public class Main {
      */
     public static void main(String[] args) {
         GameSaveService s = LogiqueFactory.getGameSaveService();
-        Plateau plateau = null;
+        Plateau plateau;
         if (args.length >= 3) {
             plateau = new Plateau();
             if (args[0].equals("-s") && args[2].equals("-a")) { //-s toto - a fichieraleatoireamoi 
