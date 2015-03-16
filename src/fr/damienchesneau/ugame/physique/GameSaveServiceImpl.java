@@ -4,6 +4,7 @@ import fr.damienchesneau.ugame.logique.GameService;
 import fr.damienchesneau.ugame.logique.entitys.Direction;
 import fr.damienchesneau.ugame.logique.entitys.HistoryItem;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -11,12 +12,16 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.List;
 
 /**
  *
- * @author Damien Chesneau <a href="mailto:contact@damienchesneau.fr">contact@damienchesneau.fr</a>
+ * @author Damien Chesneau
+ * <a href="mailto:contact@damienchesneau.fr">contact@damienchesneau.fr</a>
  */
 class GameSaveServiceImpl implements GameSaveServiceData {
 
@@ -24,39 +29,39 @@ class GameSaveServiceImpl implements GameSaveServiceData {
     public List<HistoryItem> getGaveByFileName(String name) throws IOException {
         String line;
         LinkedList<HistoryItem> history = new LinkedList<>();
-        FileInputStream fis = new FileInputStream(new File(name));
-        BufferedReader br = new BufferedReader(new InputStreamReader(fis, Charset.forName("UTF-8")));
-        while ((line = br.readLine()) != null) {
-            if (!line.startsWith("#")) {
-                Direction direction = null;
-                int vertical;
-                int horizontal;
-                int number;
-                int index = 0;
-                if (line.startsWith("N") || line.startsWith("S") || line.startsWith("W") || line.startsWith("E")) {
-                    String directionStt = line.substring(0, 1);
-                    switch (directionStt) {
-                        case "N":
-                            direction = Direction.UP;
-                            break;
-                        case "S":
-                            direction = Direction.DOWN;
-                            break;
-                        case "W":
-                            direction = Direction.LEFT;
-                            break;
-                        case "E":
-                            direction = Direction.RIGHT;
-                            break;
+        try (BufferedReader br = Files.newBufferedReader(Paths.get(name), Charset.forName("UTF-8"))) {
+            while ((line = br.readLine()) != null) {
+                if (!line.startsWith("#")) {
+                    Direction direction = null;
+                    int vertical;
+                    int horizontal;
+                    int number;
+                    int index = 0;
+                    if (line.startsWith("N") || line.startsWith("S") || line.startsWith("W") || line.startsWith("E")) {
+                        String directionStt = line.substring(0, 1);
+                        switch (directionStt) {
+                            case "N":
+                                direction = Direction.UP;
+                                break;
+                            case "S":
+                                direction = Direction.DOWN;
+                                break;
+                            case "W":
+                                direction = Direction.LEFT;
+                                break;
+                            case "E":
+                                direction = Direction.RIGHT;
+                                break;
+                        }
+                        index++;
                     }
-                    index++;
+                    String s = line.substring(index + 1, index + 2);
+                    horizontal = Integer.parseInt(line.substring(index + 2, index + 3));
+                    vertical = Integer.parseInt(line.substring(index + 1, index + 2));
+                    number = Integer.parseInt(line.substring(index, index + 1));
+                    HistoryItem item = new HistoryItem(number, horizontal, vertical, direction);
+                    history.add(item);
                 }
-                String s = line.substring(index + 1, index + 2);
-                horizontal = Integer.parseInt(line.substring(index + 2, index + 3));
-                vertical = Integer.parseInt(line.substring(index + 1, index + 2));
-                number = Integer.parseInt(line.substring(index, index + 1));
-                HistoryItem item = new HistoryItem(number, horizontal, vertical, direction);
-                history.add(item);
             }
         }
         return history;
