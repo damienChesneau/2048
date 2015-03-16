@@ -2,7 +2,7 @@ package fr.damienchesneau.ugame.logique;
 
 import fr.damienchesneau.ugame.logique.entitys.HistoryItem;
 import fr.damienchesneau.ugame.physique.GameSaveServiceData;
-import fr.damienchesneau.ugame.physique.PhysiqueFactory;
+import fr.damienchesneau.ugame.physique.PhysicalFactory;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
@@ -16,7 +16,7 @@ import java.util.logging.Logger;
  */
 class GameSaveServiceImpl implements GameSaveService {
 
-    private final GameSaveServiceData gameSaveSrv = PhysiqueFactory.getGameSaveServiceData();
+    private final GameSaveServiceData gameSaveSrv = PhysicalFactory.getGameSaveServiceData();
 
     @Override
     public GameService getGaveByFileName(final String name) throws FileNotFoundException, IOException {
